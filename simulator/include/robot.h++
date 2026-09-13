@@ -9,6 +9,9 @@ private:
 
 public:
     Robot();
+
+    explicit Robot(Vector3 position);
+
     Robot(float x, float y, float z);
 
     Vector3 getPosition();

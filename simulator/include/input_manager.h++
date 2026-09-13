@@ -6,9 +6,15 @@
 
 class InputManager
 {
+private:
+    Graphics*graphics;
+
 public:
-    static void handle3DViewInput(Graphics& graphics);
-    static void jumpToRobot(Graphics& graphics, Robot robot);
+    InputManager(Graphics* graphics);
+
+    void handle3DViewInput();
+
+    void handleWSKeys();
 };
 
 #endif //RAYLIB_TEST_INPUT_MANAGER_H
