@@ -13,8 +13,8 @@ Cave::Cave(const std::string& fileName) {
 
 void Cave::drawPointCloud() {
     //DrawModel(model, {1, -0.5, 1}, 1.0f, WHITE);
-    DrawModelWires(model, {1, -0.5, 1}, 1.0f, BLUE);
-    //Graphics::drawModelPoints(model, {1, -0.5, 1}, 1.0, RED);
+    //DrawModelWires(model, {1, -0.5, 1}, 1.0f, BLUE);
+    Graphics::drawModelPoints(model, {1, -0.8, 1}, 1.0, BLUE);
     /*for (auto point : pointCloud) {
         DrawCube(point,  0.01, 0.01, 0.01, BLUE);
     }*/

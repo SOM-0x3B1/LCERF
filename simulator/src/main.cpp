@@ -16,7 +16,7 @@ int main() {
     Graphics graphics;
     Vector3 centerPosition = { .x = 0.0f, .y = 0.1f, .z = 0.0f };
     graphics.init(1000, 600, 30, {.x = 3, .y = 3, .z = 0}, centerPosition,
-        "Cave Exploration Fleet Simulator");
+        "Lunar Cave Exploration - Simulator");
 
     auto inputManager = InputManager(&graphics);
     auto deviceManager = DeviceManager(&graphics);
@@ -43,14 +43,13 @@ int main() {
         inputManager.handle3DViewInput();
 
         BeginDrawing();
+
         ClearBackground(BLACK);
 
         BeginMode3D(*graphics.getCamera());
 
-        DrawGrid(20, 1);
-
         //DrawModelPoints(cave, centerPosition, 1.0f, WHITE);
-
+        DrawGrid(20, 1);
         cave.drawPointCloud();
         deviceManager.drawAll();
         graphics.drawCursor();
