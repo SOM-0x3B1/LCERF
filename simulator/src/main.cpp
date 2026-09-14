@@ -14,9 +14,13 @@
 
 int main() {
     Graphics graphics;
+    Vector3 centerPosition = { .x = 0.0f, .y = 0.1f, .z = 0.0f };
+    graphics.init(1000, 600, 30, {.x = 3, .y = 3, .z = 0}, centerPosition,
+        "Cave Exploration Fleet Simulator");
+
     auto inputManager = InputManager(&graphics);
     auto deviceManager = DeviceManager(&graphics);
-    auto cave = Cave();
+    auto cave = Cave("pisgah-long-survey-all2m.glb");
 
     std::random_device rd;
     std::mt19937 mt(rd());
@@ -32,10 +36,6 @@ int main() {
     /*Model cave = LoadModel("valentine_tube_5cmXYZRGBI.asc");
     if (!IsModelValid(cave))
         throw std::exception{"invalid model"};*/
-
-    Vector3 centerPosition = { .x = 0.0f, .y = 0.1f, .z = 0.0f };
-    graphics.init(1000, 600, 30, {.x = 3, .y = 3, .z = 0}, centerPosition,
-        "Cave Exploration Fleet Simulator");
 
     while (!WindowShouldClose())
     {

@@ -41,6 +41,8 @@ public:
     void rotateCameraPitchAroundTarget(float pitch);
 
     static Color getProximityColor(Vector3 a, Vector3 b);
+
+    static void drawModelPoints(Model model, Vector3 position, float scale, Color tint);
 };
 
 #endif //RAYLIB_TEST_GRAPHICS_H

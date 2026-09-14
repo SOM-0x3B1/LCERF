@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "rcamera.h"
+#include "rlgl.h"
 
 Graphics::Graphics() : camera() {
     screenWidth = 0;
@@ -118,4 +119,16 @@ Color Graphics::getProximityColor(Vector3 a, Vector3 b) {
         return ColorLerp(GREEN, BLUE, (distance - 1.6f) / 0.8f);
     else
         return BLUE;
+}
+
+
+void Graphics::drawModelPoints(Model model, Vector3 position, float scale, Color tint)
+{
+    rlEnablePointMode();
+    rlDisableBackfaceCulling();
+
+    DrawModel(model, position, scale, tint);
+
+    rlEnableBackfaceCulling();
+    rlDisablePointMode();
 }

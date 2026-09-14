@@ -1,6 +1,7 @@
 #ifndef LCERF_CAVE_HPP
 #define LCERF_CAVE_HPP
 #include <array>
+#include <string>
 
 #include "raylib.h"
 
@@ -8,10 +9,11 @@
 
 class Cave {
 private:
+    Model model{};
     std::array<Vector3, CAVE_POINT_COUNT> pointCloud{};
 
 public:
-    Cave();
+    explicit Cave(const std::string& fileName);
 
     void drawPointCloud();
 };
