@@ -2,11 +2,9 @@
 #define RAYLIB_TEST_ROBOT_H
 
 #include <raylib.h>
+#include "device.hpp"
 
-class Robot {
-private:
-    Vector3 position{};
-
+class Robot : public Device {
 public:
     Robot();
 
@@ -14,7 +12,7 @@ public:
 
     Robot(float x, float y, float z);
 
-    Vector3 getPosition();
+    void Draw() override;
 };
 
 

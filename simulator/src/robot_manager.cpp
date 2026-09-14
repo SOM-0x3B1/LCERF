@@ -20,9 +20,7 @@ void RobotManager::addRobot(Robot* robot) {
 
 void RobotManager::drawRobots() {
     for (Robot* robot : robots) {
-        Vector3 robotPosition = robot->getPosition();
-        Color proximityColor = Graphics::getProximityColor(graphics->getTarget(), robotPosition);
-        DrawCube(robotPosition, 0.2, 0.1, 0.15, proximityColor);
+        robot->Draw();
     }
 }
 

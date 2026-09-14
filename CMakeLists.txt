@@ -20,6 +20,7 @@ add_executable(${PROJECT_NAME} simulator/src/main.cpp
         simulator/src/graphics.cpp
         simulator/src/input_manager.cpp
         simulator/src/robot.cpp
-        simulator/src/robot_manager.cpp)
+        simulator/src/robot_manager.cpp
+        simulator/src/device.cpp)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

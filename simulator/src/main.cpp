@@ -8,7 +8,7 @@
 #include "../include/robot_manager.h++"
 
 #define CAVE_POINT_COUNT 2000
-#define ROBOT_COUNT 10
+#define ROBOT_COUNT 5
 
 int main() {
     Graphics graphics;
@@ -20,11 +20,11 @@ int main() {
     std::uniform_real_distribution<float> dist(-2.0, 2.0);
 
     Vector3 cavePoints[CAVE_POINT_COUNT];
-    for (int i = 0; i < CAVE_POINT_COUNT; i++)
-        cavePoints[i] = { dist(mt), dist(mt) / 2.0f + 1.0f, dist(mt) };
+    for (auto & cavePoint : cavePoints)
+        cavePoint = { .x = dist(mt), .y = dist(mt) / 2.0f + 1.0f, .z = dist(mt) };
 
     for (int i = 0; i < ROBOT_COUNT; i++) {
-        Vector3 robotPosition = {dist(mt), dist(mt) / 2.0f + 1.0f, dist(mt)};
+        Vector3 robotPosition = {.x = dist(mt), .y = 0, .z = dist(mt)};
         robotManager.addRobot(new Robot(robotPosition));
     }
 
@@ -32,8 +32,8 @@ int main() {
     if (!IsModelValid(cave))
         throw std::exception{"invalid model"};*/
 
-    Vector3 centerPosition = { 0.0f, 0.0f, 0.0f };
-    graphics.init(1000, 600, 30, {3, 3, 0}, centerPosition,
+    Vector3 centerPosition = { .x = 0.0f, .y = 0.0f, .z = 0.0f };
+    graphics.init(1000, 600, 30, {.x = 3, .y = 3, .z = 0}, centerPosition,
         "Cave Exploration Fleet Simulator");
 
     while (!WindowShouldClose())
@@ -48,9 +48,9 @@ int main() {
 
         DrawGrid(10, 1);
 
-        for (int i = 0; i < CAVE_POINT_COUNT; i++) {
-            DrawCube(cavePoints[i],  0.01, 0.01, 0.01,
-                Graphics::getProximityColor(graphics.getCamera()->target, cavePoints[i]));
+        for (auto cavePoint : cavePoints) {
+            DrawCube(cavePoint,  0.01, 0.01, 0.01,
+                Graphics::getProximityColor(graphics.getTarget(), cavePoint));
         }
         //DrawModelPoints(cave, centerPosition, 1.0f, WHITE);
 
