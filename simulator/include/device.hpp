@@ -1,5 +1,5 @@
-#ifndef LCERF_DEVICE_HPP
-#define LCERF_DEVICE_HPP
+#ifndef LCERF_DEVICE_H
+#define LCERF_DEVICE_H
 
 #include <raylib.h>
 
@@ -16,4 +16,4 @@ public:
 };
 
 
-#endif //LCERF_DEVICE_HPP
+#endif //LCERF_DEVICE_H

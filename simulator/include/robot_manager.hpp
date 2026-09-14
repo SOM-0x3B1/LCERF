@@ -3,12 +3,11 @@
 
 #include <vector>
 
-#include "graphics.h++"
-#include "robot.h++"
+#include "graphics.hpp"
+#include "robot.hpp"
 
 class RobotManager {
 private:
-    int currentRobotIndex = 0;
     std::vector<Robot*> robots;
     Graphics* graphics;
 

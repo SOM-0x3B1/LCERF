@@ -1,4 +1,4 @@
-#include "../include/graphics.h++"
+#include "../include/graphics.hpp"
 
 #include "raylib.h"
 #include "raymath.h"

@@ -1,4 +1,4 @@
-#include "../include/robot.h++"
+#include "../include/robot.hpp"
 
 Robot::Robot() {
     this->position = {.x = 0, .y = 0, .z = 0};

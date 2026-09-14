@@ -2,10 +2,10 @@
 #include "raymath.h"
 #include <random>
 
-#include "../include/graphics.h++"
-#include "../include/input_manager.h++"
-#include "../include/robot.h++"
-#include "../include/robot_manager.h++"
+#include "../include/graphics.hpp"
+#include "../include/input_manager.hpp"
+#include "../include/robot.hpp"
+#include "../include/robot_manager.hpp"
 
 #define CAVE_POINT_COUNT 2000
 #define ROBOT_COUNT 5
@@ -46,7 +46,7 @@ int main() {
 
         BeginMode3D(*graphics.getCamera());
 
-        DrawGrid(10, 1);
+        DrawGrid(20, 1);
 
         for (auto cavePoint : cavePoints) {
             DrawCube(cavePoint,  0.01, 0.01, 0.01,
