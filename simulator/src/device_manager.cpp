@@ -4,13 +4,17 @@ DeviceManager::DeviceManager(Graphics *graphics) : robotManager(graphics) {
     this->graphics = graphics;
 }
 
-void DeviceManager::DrawAll() {
+void DeviceManager::drawAll() {
     for (auto device: devices) {
-        device->Draw();
+        device->draw();
     }
 }
 
-void DeviceManager::AddRobot(Robot* robot) {
+void DeviceManager::addRobot(Robot* robot) {
     devices.push_back(robot);
     robotManager.addRobot(robot);
+}
+
+void DeviceManager::addStaticDevice(DeviceStatic *device) {
+    devices.push_back(device);
 }

@@ -2,17 +2,15 @@
 #define RAYLIB_TEST_ROBOT_H
 
 #include <raylib.h>
-#include "device.hpp"
+#include "../device_movable.hpp"
 
-class Robot : public Device {
+class Robot : public DeviceMovable {
 public:
-    Robot();
-
     explicit Robot(Vector3 position);
 
     Robot(float x, float y, float z);
 
-    void Draw() override;
+    void draw() override;
 };
 
 

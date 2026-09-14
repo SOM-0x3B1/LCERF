@@ -8,11 +8,13 @@ protected:
     Vector3 position{};
 
 public:
+    explicit Device(Vector3 position);
+
     virtual ~Device() = default;
 
     Vector3 getPosition();
 
-    virtual void Draw() = 0;
+    virtual void draw() = 0;
 };
 
 

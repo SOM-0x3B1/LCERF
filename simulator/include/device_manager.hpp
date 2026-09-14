@@ -2,8 +2,9 @@
 #define LCERF_DEVICE_MANAGER_H
 
 #include <vector>
-#include "device.hpp"
+#include "devices/device.hpp"
 #include "robot_manager.hpp"
+#include "devices/device_static.hpp"
 
 class DeviceManager {
 private:
@@ -15,9 +16,11 @@ private:
 public:
     explicit DeviceManager(Graphics* graphics);
 
-    void DrawAll();
+    void drawAll();
 
-    void AddRobot(Robot* robot);
+    void addRobot(Robot* robot);
+
+    void addStaticDevice(DeviceStatic* device);
 };
 
 
