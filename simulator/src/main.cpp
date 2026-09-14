@@ -2,37 +2,38 @@
 #include "raymath.h"
 #include <random>
 
+#include "../include/cave.hpp"
+#include "../include/device_manager.hpp"
 #include "../include/graphics.hpp"
 #include "../include/input_manager.hpp"
-#include "../include/robot.hpp"
+#include "../include/devices/movable/robot.hpp"
 #include "../include/robot_manager.hpp"
+#include "../include/devices/static/base_station.hpp"
 
-#define CAVE_POINT_COUNT 2000
 #define ROBOT_COUNT 5
 
 int main() {
     Graphics graphics;
     auto inputManager = InputManager(&graphics);
-    auto robotManager = RobotManager(&graphics);
+    auto deviceManager = DeviceManager(&graphics);
+    auto cave = Cave();
 
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_real_distribution<float> dist(-2.0, 2.0);
 
-    Vector3 cavePoints[CAVE_POINT_COUNT];
-    for (auto & cavePoint : cavePoints)
-        cavePoint = { .x = dist(mt), .y = dist(mt) / 2.0f + 1.0f, .z = dist(mt) };
-
     for (int i = 0; i < ROBOT_COUNT; i++) {
         Vector3 robotPosition = {.x = dist(mt), .y = 0, .z = dist(mt)};
-        robotManager.addRobot(new Robot(robotPosition));
+        deviceManager.addRobot(new Robot(robotPosition));
     }
+
+    deviceManager.addStaticDevice(new BaseStation(Vector3{0, 0, 0}));
 
     /*Model cave = LoadModel("valentine_tube_5cmXYZRGBI.asc");
     if (!IsModelValid(cave))
         throw std::exception{"invalid model"};*/
 
-    Vector3 centerPosition = { .x = 0.0f, .y = 0.0f, .z = 0.0f };
+    Vector3 centerPosition = { .x = 0.0f, .y = 0.1f, .z = 0.0f };
     graphics.init(1000, 600, 30, {.x = 3, .y = 3, .z = 0}, centerPosition,
         "Cave Exploration Fleet Simulator");
 
@@ -48,13 +49,10 @@ int main() {
 
         DrawGrid(20, 1);
 
-        for (auto cavePoint : cavePoints) {
-            DrawCube(cavePoint,  0.01, 0.01, 0.01,
-                Graphics::getProximityColor(graphics.getTarget(), cavePoint));
-        }
         //DrawModelPoints(cave, centerPosition, 1.0f, WHITE);
 
-        robotManager.drawRobots();
+        cave.drawPointCloud();
+        deviceManager.drawAll();
         graphics.drawCursor();
 
         EndMode3D();

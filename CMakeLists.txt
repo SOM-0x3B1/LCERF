@@ -19,10 +19,14 @@ endif ()
 add_executable(${PROJECT_NAME} simulator/src/main.cpp
         simulator/src/graphics.cpp
         simulator/src/input_manager.cpp
-        simulator/src/robot.cpp
+        simulator/src/devices/movable/robot.cpp
         simulator/src/robot_manager.cpp
-        simulator/src/device.cpp
+        simulator/src/devices/device.cpp
+        simulator/src/devices/device_static.cpp
+        simulator/src/devices/device_movable.cpp
         simulator/src/device_manager.cpp
-        simulator/src/device_manager.hpp)
+        simulator/src/devices/static/base_station.cpp
+        simulator/src/cave.cpp
+)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

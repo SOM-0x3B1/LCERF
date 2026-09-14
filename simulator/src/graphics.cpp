@@ -15,7 +15,7 @@ void Graphics::init(int sw, int sh, int fps, const Vector3 cam_pos, const Vector
 
     camera.position   = cam_pos;
     camera.target     = cam_target;
-    camera.up         = { 0.0f, 1.0f, 0.0f };
+    camera.up         = { .x = 0.0f, .y = 1.0f, .z = 0.0f };
     camera.fovy       = 60.0f;
     camera.projection = CAMERA_PERSPECTIVE;
 
@@ -111,7 +111,7 @@ Color Graphics::getProximityColor(Vector3 a, Vector3 b) {
     float distance = Vector3Distance(a, b);
 
     if (distance < 1.2f)
-        return  ColorLerp(Color(255, 0 ,0, 255), YELLOW, distance / 0.8f);
+        return ColorLerp(Color(255, 0 ,0, 255), YELLOW, distance / 0.8f);
     else if (distance < 2.0f)
         return ColorLerp(YELLOW, GREEN, (distance - 0.8f) / 0.8f);
     else if (distance < 3.8f)

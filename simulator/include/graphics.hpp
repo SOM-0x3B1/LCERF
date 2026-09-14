@@ -9,7 +9,7 @@ private:
     int screenHeight;
     Vector3 deltaVectorFromTarget;
 
-    const float cursorFadeOutDistance = 1.5;
+    constexpr static float cursorFadeOutDistance = 1.5;
 
     void correctTarget(Vector3 ogPos);
 
