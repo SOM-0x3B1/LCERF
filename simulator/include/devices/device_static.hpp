@@ -8,7 +8,7 @@ class DeviceStatic : public Device {
 public:
     explicit DeviceStatic(Vector3);
 
-    void draw() override;
+    void draw() override = 0;
 };
 
 

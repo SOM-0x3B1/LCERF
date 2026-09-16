@@ -9,6 +9,7 @@
 #include "../include/devices/movable/robot.hpp"
 #include "../include/robot_manager.hpp"
 #include "../include/devices/static/base_station.hpp"
+#include "../include/devices/static/wire.hpp"
 
 #define ROBOT_COUNT 5
 
@@ -26,12 +27,13 @@ int main() {
     std::mt19937 mt(rd());
     std::uniform_real_distribution<float> dist(-2.0, 2.0);
 
+    deviceManager.addStaticDevice(new BaseStation(Vector3{0, 0, 0}));
     for (int i = 0; i < ROBOT_COUNT; i++) {
         Vector3 robotPosition = {.x = dist(mt), .y = 0, .z = dist(mt)};
         deviceManager.addRobot(new Robot(robotPosition));
+        deviceManager.addStaticDevice(new Wire(robotPosition, Vector3{0, 0, 0}));
     }
 
-    deviceManager.addStaticDevice(new BaseStation(Vector3{0, 0, 0}));
 
     /*Model cave = LoadModel("valentine_tube_5cmXYZRGBI.asc");
     if (!IsModelValid(cave))

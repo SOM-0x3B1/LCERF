@@ -27,6 +27,8 @@ add_executable(${PROJECT_NAME} simulator/src/main.cpp
         simulator/src/device_manager.cpp
         simulator/src/devices/static/base_station.cpp
         simulator/src/cave.cpp
+        simulator/src/devices/static/wire.cpp
+        simulator/include/devices/static/wire.hpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

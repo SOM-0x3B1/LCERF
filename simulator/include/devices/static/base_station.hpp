@@ -7,6 +7,8 @@
 class BaseStation : public DeviceStatic {
 public:
     explicit BaseStation(Vector3);
+
+    void draw() override;
 };
 
 
