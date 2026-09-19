@@ -32,3 +32,8 @@ add_executable(${PROJECT_NAME} simulator/src/main.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
+
+add_custom_target(copy_resources
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
+)
+add_dependencies(${PROJECT_NAME} copy_resources)

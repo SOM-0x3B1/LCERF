@@ -6,7 +6,7 @@
 
 class DeviceMovable : public Device {
 public:
-    explicit DeviceMovable(Vector3 position);
+    explicit DeviceMovable(Vector3 position, Graphics* graphics);
 };
 
 

@@ -23,7 +23,8 @@ public:
     Vector3 getTarget();
     Vector3 getDeltaVectorFromTarget();
     void updateDeltaVectorFromTarget();
-    float getDistanceFromTarget();
+    float getCameraDistanceFromTarget();
+    float getVectorDistanceFromTarget(Vector3 v);
 
     void drawCursor();
 

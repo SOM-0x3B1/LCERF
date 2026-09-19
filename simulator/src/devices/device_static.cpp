@@ -2,4 +2,4 @@
 
 #include <raylib.h>
 
-DeviceStatic::DeviceStatic(Vector3 position) : Device(position) { }
+DeviceStatic::DeviceStatic(Vector3 position, Graphics* graphics) : Device(position, graphics) { }

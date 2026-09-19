@@ -6,9 +6,7 @@
 
 class Robot : public DeviceMovable {
 public:
-    explicit Robot(Vector3 position);
-
-    Robot(float x, float y, float z);
+    explicit Robot(Vector3 position, Graphics* graphics);
 
     void draw() override;
 };

@@ -5,8 +5,11 @@
 
 
 class BaseStation : public DeviceStatic {
+    const float radius = 0.3f;
+    const float height = 0.1f;
+
 public:
-    explicit BaseStation(Vector3);
+    explicit BaseStation(Vector3 position, Graphics* graphics);
 
     void draw() override;
 };

@@ -4,7 +4,7 @@
 
 #include "../../../include/devices/static/wire.hpp"
 
-Wire::Wire(Vector3 startPosition, Vector3 endPosition) : DeviceStatic(startPosition) {
+Wire::Wire(Vector3 startPosition, Vector3 endPosition, Graphics* graphics) : DeviceStatic(startPosition, graphics) {
     this->endPosition = endPosition;
 }
 

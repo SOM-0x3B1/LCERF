@@ -44,18 +44,22 @@ void Graphics::updateDeltaVectorFromTarget() {
     deltaVectorFromTarget = Vector3Subtract(camera.position, camera.target);
 }
 
-float Graphics::getDistanceFromTarget() {
+float Graphics::getCameraDistanceFromTarget() {
     return Vector3Distance(camera.position, camera.target);
 }
 
+float Graphics::getVectorDistanceFromTarget(Vector3 v) {
+    return Vector3Distance(v, camera.target);
+}
+
 void Graphics::drawCursor() {
-    float distance = getDistanceFromTarget();
+    float distance = getCameraDistanceFromTarget();
     unsigned char alpha = 255;
     if (distance < cursorFadeOutDistance)
         alpha = static_cast<unsigned char>((distance / cursorFadeOutDistance) * 255);
 
     auto color = Color(255, 255, 255, alpha);
-    DrawSphere(camera.target, 0.05f, color);
+    DrawSphere(camera.target, 0.02f, color);
 }
 
 void Graphics::updateCamera() {
@@ -87,7 +91,7 @@ void Graphics::moveCameraUp(float distance) {
     CameraMoveUp(&camera, distance);
 }
 void Graphics::zoomCamera(float delta) {
-    if (getDistanceFromTarget() > 0.1 || delta < 0) {
+    if (getCameraDistanceFromTarget() > 0.1 || delta < 0) {
         camera.position = Vector3MoveTowards(camera.position, camera.target, delta);
         updateDeltaVectorFromTarget();
     }

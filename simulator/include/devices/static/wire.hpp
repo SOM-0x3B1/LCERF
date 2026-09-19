@@ -9,7 +9,7 @@ private:
     Vector3 endPosition{};
 
 public:
-    Wire(Vector3 startPosition, Vector3 endPosition);
+    Wire(Vector3 startPosition, Vector3 endPosition, Graphics* graphics);
     Vector3 getEndPosition();
 
     void draw() override;

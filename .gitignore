@@ -1,2 +1,5 @@
 /cmake-build-debug-visual-studio
+/cmake-build-debug-mingw
 /.idea
+/3D-models
+/resources
