@@ -2,19 +2,24 @@
 #define LCERF_CAVE_HPP
 
 #include <string>
-#include <vector>
+#include <array>
 
 #include "graphics.hpp"
 #include "raylib.h"
+#include "chunk.hpp"
 
-#define CAVE_POINT_COUNT 2000
+constexpr size_t CHUNK_SIZE = 2;
+constexpr size_t CHUNK_COUNT_X = 100;
+constexpr size_t CHUNK_COUNT_Y = 100;
 
 class Cave {
 private:
     Model model{};
     Mesh mesh{};
     Vector3 modelBaseOffset{};
-    std::vector<Vector3> pointCloud{};
+
+    std::array<Chunk*, CHUNK_COUNT_X * CHUNK_COUNT_Y> chunks;
+    Chunk* GetChunkAt(ChunkCoord c);
 
     Graphics* graphics;
 
@@ -27,6 +32,5 @@ public:
 
     void drawPointCloud();
 };
-
 
 #endif //LCERF_CAVE_HPP

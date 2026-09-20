@@ -25,7 +25,7 @@ void Graphics::init(int sw, int sh, int fps, const Vector3 cam_pos, const Vector
     InitWindow(screenWidth, screenHeight, title);
     SetTargetFPS(fps);
 
-    SetWindowState(FLAG_WINDOW_RESIZABLE);
+    SetWindowState(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
 }
 
 Camera* Graphics::getCamera() {
