@@ -8,9 +8,9 @@
 #include "raylib.h"
 #include "chunk.hpp"
 
-constexpr size_t CHUNK_SIZE = 2;
-constexpr size_t CHUNK_COUNT_X = 100;
-constexpr size_t CHUNK_COUNT_Y = 100;
+constexpr int CHUNK_SIZE = 1;
+constexpr int CHUNK_COUNT_X = 100;
+constexpr int CHUNK_COUNT_Y = 100;
 
 class Cave {
 private:

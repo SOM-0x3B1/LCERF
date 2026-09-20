@@ -50,16 +50,19 @@ Cave::~Cave() {
 }
 
 void Cave::drawPointCloud() {
-    //DrawModel(model, {1, -0.5, 1}, 1.0f, WHITE);
-    //DrawModelWires(model, {1, -0.5, 1}, 1.0f, BLUE);
-    //Graphics::drawModelPoints(model, modelBaseOffset, 1.0, BLUE);
-    /**/
     auto chunkCoordOfTarget = ChunkCoords(graphics->getTarget(), CHUNK_SIZE);
-    Chunk* chunk = GetChunkAt(chunkCoordOfTarget);
-    /*const std::vector<Vector3>* chunkPoints = chunk->GetPoints();
-    int count = chunkPoints->size();
-    for (int i = 0; i < count; ++i) {
-        //DrawCube((*chunkPoints)[i], 0.01, 0.01, 0.01, BLUE);
-    }*/
-    chunk->DrawChunkModel();
+    int renderDistance = graphics->getRenderDistance();
+    int xStart = std::max(chunkCoordOfTarget.x - renderDistance, -CHUNK_COUNT_X/2);
+    int xEnd= std::min(chunkCoordOfTarget.x + renderDistance, CHUNK_COUNT_X/2);
+    int yStart = std::max(chunkCoordOfTarget.y - renderDistance, -CHUNK_COUNT_Y/2);
+    int yEnd= std::min(chunkCoordOfTarget.y + renderDistance, CHUNK_COUNT_Y/2);
+
+    for (int x = xStart; x < xEnd; ++x) {
+        for (int y = yStart; y < yEnd; ++y) {
+            auto currCoords = ChunkCoords(x, y);
+            float chunkDistance = chunkCoordOfTarget.distanceFrom(currCoords);
+            Chunk* chunk = GetChunkAt(currCoords);
+            chunk->DrawChunkModel(chunkDistance);
+        }
+    }
 }

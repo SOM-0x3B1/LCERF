@@ -10,9 +10,11 @@ Graphics::Graphics() : camera() {
     screenHeight = 0;
 }
 
-void Graphics::init(int sw, int sh, int fps, const Vector3 cam_pos, const Vector3 cam_target, const char* title) {
-    screenWidth = sw;
-    screenHeight = sh;
+void Graphics::init(int screenWidth, int screenHeight, int fps, const Vector3 cam_pos, const Vector3 cam_target, const char* title, int renderDistance) {
+    this->screenWidth = screenWidth;
+    this->screenHeight = screenHeight;
+
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
 
     camera.position   = cam_pos;
     camera.target     = cam_target;
@@ -20,12 +22,12 @@ void Graphics::init(int sw, int sh, int fps, const Vector3 cam_pos, const Vector
     camera.fovy       = 60.0f;
     camera.projection = CAMERA_PERSPECTIVE;
 
+    this->renderDistance = renderDistance;
+
     updateDeltaVectorFromTarget();
 
     InitWindow(screenWidth, screenHeight, title);
     SetTargetFPS(fps);
-
-    SetWindowState(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
 }
 
 Camera* Graphics::getCamera() {
@@ -50,6 +52,14 @@ float Graphics::getCameraDistanceFromTarget() {
 
 float Graphics::getVectorDistanceFromTarget(Vector3 v) {
     return Vector3Distance(v, camera.target);
+}
+
+int Graphics::getRenderDistance() {
+    return renderDistance;
+}
+
+void Graphics::setRenderDistance(int rd) {
+    renderDistance = rd;
 }
 
 void Graphics::drawCursor() {

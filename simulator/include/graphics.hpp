@@ -9,6 +9,7 @@ private:
     int screenHeight;
     Vector3 deltaVectorFromTarget;
 
+    int renderDistance;
     constexpr static float cursorFadeOutDistance = 1.5;
 
     void correctTarget(Vector3 ogPos);
@@ -16,7 +17,7 @@ private:
 public:
     Graphics();
 
-    void init(int screenWidth, int screenHeight, int fps, Vector3 cam_pos, Vector3 cam_target, const char* title);
+    void init(int screenWidth, int screenHeight, int fps, Vector3 cam_pos, Vector3 cam_target, const char* title, int renderDistance);
 
     Camera* getCamera();
 
@@ -25,6 +26,9 @@ public:
     void updateDeltaVectorFromTarget();
     float getCameraDistanceFromTarget();
     float getVectorDistanceFromTarget(Vector3 v);
+
+    int getRenderDistance();
+    void setRenderDistance(int rd);
 
     void drawCursor();
 

@@ -14,6 +14,8 @@ public:
     explicit ChunkCoords(int x, int y);
     explicit ChunkCoords(Vector2 v, int chunkSize);
     explicit ChunkCoords(Vector3 v, int chunkSize);
+
+    float distanceFrom(ChunkCoords c);
 };
 
 
@@ -22,12 +24,16 @@ private:
     const ChunkCoords coords;
     const int chunkSize;
 
-    int pointCount;
+    int fullPointCount;
     std::vector<Vector3> points;
 
-    Model model{};
+    Model modelFull{};
+    Model modelHalf{};
+    Model modelQuarter{};
+    Model modelMin{};
+
     Graphics* graphics;
-    Mesh GenerateMesh();
+    Mesh GenerateMesh(int resolutionDivider);
 
 public:
     explicit Chunk(ChunkCoords coords, Graphics* graphics, int chunkSize);
@@ -37,7 +43,7 @@ public:
     void AddPoint(Vector3 point);
     void GenChunkModel();
 
-    void DrawChunkModel();
+    void DrawChunkModel(float chunkDistance);
 };
 
 #endif //LCERF_REGION_HPP

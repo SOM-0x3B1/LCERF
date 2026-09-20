@@ -16,12 +16,12 @@
 int main() {
     Graphics graphics;
     Vector3 centerPosition = { .x = 0.0f, .y = 0.1f, .z = 0.0f };
-    graphics.init(1000, 600, 60, {.x = 1, .y = 1, .z = 0}, centerPosition,
-        "Lunar Cave Exploration - Simulator");
+    graphics.init(1000, 600, 60, {.x = 1.5, .y = 1.5, .z = 0}, centerPosition,
+        "Lunar Cave Exploration - Simulator", 12);
 
     auto inputManager = InputManager(&graphics);
     auto deviceManager = DeviceManager(&graphics);
-    auto cave = Cave("pisgah-realigned-reduced.obj", &graphics, {0.0f, 0.1f, 0.0f});
+    auto cave = Cave("pisgah-realigned.obj", &graphics, {0.0f, 0.1f, 0.0f});
 
     std::random_device rd;
     std::mt19937 mt(rd());
