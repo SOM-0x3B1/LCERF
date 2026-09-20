@@ -21,7 +21,7 @@ int main() {
 
     auto inputManager = InputManager(&graphics);
     auto deviceManager = DeviceManager(&graphics);
-    auto cave = Cave("model.obj", &graphics, {0.0f, 0.1f, 0.0f});
+    auto cave = Cave("pisgah-realigned-reduced.obj", &graphics, {0.0f, 0.1f, 0.0f});
 
     std::random_device rd;
     std::mt19937 mt(rd());

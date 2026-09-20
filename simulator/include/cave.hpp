@@ -18,15 +18,14 @@ private:
     Mesh mesh{};
     Vector3 modelBaseOffset{};
 
-    std::array<Chunk*, CHUNK_COUNT_X * CHUNK_COUNT_Y> chunks;
-    Chunk* GetChunkAt(ChunkCoord c);
+    std::array<Chunk*, CHUNK_COUNT_X * CHUNK_COUNT_Y> chunks{};
+    Chunk* GetChunkAt(ChunkCoords c);
 
     Graphics* graphics;
 
     void LoadCaveModel(const std::string& fileName);
 
 public:
-    explicit Cave(const std::string& fileName, Graphics* graphics);
     explicit Cave(const std::string& fileName, Graphics* graphics, Vector3 offset);
     ~Cave();
 
