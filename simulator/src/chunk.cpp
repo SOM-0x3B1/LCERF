@@ -1,4 +1,5 @@
 #include "../include/chunk.hpp"
+#include <thread>
 
 
 ChunkCoords::ChunkCoords(int x, int y) : chunkSize(1) {
@@ -67,14 +68,16 @@ void Chunk::AddPoint(Vector3 point) {
 }
 
 void Chunk::GenChunkModel() {
-    Mesh mesh = GenerateMesh(1);
-    modelFull = LoadModelFromMesh(mesh);
-    mesh = GenerateMesh(2);
-    modelHalf = LoadModelFromMesh(mesh);
-    mesh = GenerateMesh(4);
-    modelQuarter = LoadModelFromMesh(mesh);
-    mesh = GenerateMesh(8);
-    modelMin = LoadModelFromMesh(mesh);
+    if (fullPointCount > 0) {
+        Mesh mesh = GenerateMesh(1);
+        modelFull = LoadModelFromMesh(mesh);
+        mesh = GenerateMesh(2);
+        modelHalf = LoadModelFromMesh(mesh);
+        mesh = GenerateMesh(4);
+        modelQuarter = LoadModelFromMesh(mesh);
+        mesh = GenerateMesh(8);
+        modelMin = LoadModelFromMesh(mesh);
+    }
 }
 
 void Chunk::DrawChunkModel(float chunkDistance) {
