@@ -86,20 +86,20 @@ void Chunk::DrawChunkModel(float chunkDistance) {
     int alpha = 0;
     Model* model = nullptr;
     if (chunkDistance > renderDistanceF - renderDistanceF * 0.2) {
-        alpha = 10;
+        alpha = 30;
         model = &modelMin;
     }
     else if (chunkDistance > renderDistanceF - renderDistanceF * 0.5) {
-        alpha = 20;
-        model = &modelQuarter;
+        alpha = 40;
+        model = &modelMin;
     }
     else if (chunkDistance > renderDistanceF - renderDistanceF * 0.7) {
-        alpha = 30;
-        model = &modelHalf;
+        alpha = 60;
+        model = &modelQuarter;
     }
     else if (chunkDistance > renderDistanceF - renderDistanceF * 0.8) {
-        alpha = 40;
-        model = &modelFull;
+        alpha = 100;
+        model = &modelHalf;
     }
     else {
         alpha = 255;
