@@ -2,12 +2,18 @@
 #define RAYLIB_TEST_GRAPHICS_H
 #include "raylib.h"
 
+#if defined(PLATFORM_DESKTOP)
+    #define GLSL_VERSION            330
+#else   // PLATFORM_ANDROID, PLATFORM_WEB
+    #define GLSL_VERSION            100
+#endif
+
 class Graphics {
 private:
     Camera camera;
     int screenWidth;
     int screenHeight;
-    Vector3 deltaVectorFromTarget;
+    Vector3 deltaVectorFromTarget{};
 
     int renderDistance;
     constexpr static float cursorFadeOutDistance = 1.5;

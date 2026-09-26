@@ -8,6 +8,7 @@
 Graphics::Graphics() : camera() {
     screenWidth = 0;
     screenHeight = 0;
+    renderDistance = 6;
 }
 
 void Graphics::init(int screenWidth, int screenHeight, int fps, const Vector3 cam_pos, const Vector3 cam_target, const char* title, int renderDistance) {
