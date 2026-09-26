@@ -6,11 +6,16 @@
 
 class Wire : public DeviceStatic {
 private:
-    Vector3 endPosition{};
+    Vector3 secondPosition{};
 
 public:
     Wire(Vector3 startPosition, Vector3 endPosition, Graphics* graphics);
+
+    Vector3 getStartPosition();
     Vector3 getEndPosition();
+
+    void setStartPosition(Vector3 pos);
+    void setEndPosition(Vector3 pos);
 
     void draw() override;
 };

@@ -19,7 +19,7 @@ endif ()
 add_executable(${PROJECT_NAME} simulator/src/main.cpp
         simulator/src/graphics.cpp
         simulator/src/input_manager.cpp
-        simulator/src/devices/movable/robot.cpp
+        simulator/src/devices/moving/robot.cpp
         simulator/src/robot_manager.cpp
         simulator/src/devices/device.cpp
         simulator/src/devices/device_static.cpp
@@ -29,6 +29,12 @@ add_executable(${PROJECT_NAME} simulator/src/main.cpp
         simulator/src/cave.cpp
         simulator/src/devices/static/wire.cpp
         simulator/src/chunk.cpp
+        simulator/src/devices/attachable/interface_wireless.cpp
+        simulator/src/devices/attachable/interface_wired.cpp
+        simulator/src/devices/device_attachable.cpp
+        simulator/src/devices/attachable/interface.cpp
+        simulator/src/network/network_node.cpp
+        simulator/src/network/network_data.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

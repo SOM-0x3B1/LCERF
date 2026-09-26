@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "graphics.hpp"
-#include "devices/movable/robot.hpp"
+#include "devices/moving/robot.hpp"
 
 class RobotManager {
 private:
