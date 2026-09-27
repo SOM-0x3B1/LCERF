@@ -5,14 +5,17 @@
 
 class InterfaceWireless : public Interface{
 private:
-    std::vector<InterfaceWireless> connectedInterfaces;
     float range;
+
+    bool isInterfaceConnected(Interface* interface);
 
 public:
     explicit InterfaceWireless(Vector3 position, Graphics* graphics, int id, float range);
     explicit InterfaceWireless(Vector3 position, Graphics* graphics, int id, float range, Device* attachedTo);
 
-    void updateConnections() override;
+    float getRange();
+
+    void updateConnections(std::vector<Interface*> interfaces) override;
 
     void draw() override;
 };

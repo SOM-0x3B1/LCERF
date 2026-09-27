@@ -19,7 +19,8 @@ public:
 
     void addWire(Wire* wire, bool isAttachedToSecondPosition);
     void updatePosition(Vector3 newPosition) override;
-    void updateConnections() override;
+
+    void updateConnections(std::vector<Interface*> interfaces) override;
 
     void draw() override;
 };

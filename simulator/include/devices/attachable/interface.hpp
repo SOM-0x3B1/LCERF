@@ -6,14 +6,19 @@
 #include "../device.hpp"
 #include "../device_attachable.hpp"
 #include "../../network/network_data.hpp"
-#include "../../network/network_node.hpp"
 
+
+enum class InterfaceType {
+    WIRED,
+    WIRELESS
+};
 
 class Interface : public DeviceAttachable {
 protected:
     int id;
     Device* attachedTo;
-    NetworkNode networkNode;
+    std::vector<Interface*> connectedInterfaces;
+
     std::deque<NetworkData> rxBuffer;
 
     bool isTargetInterfaceConnected(int targetID);
@@ -23,7 +28,7 @@ public:
     explicit Interface(Vector3 position, Graphics* graphics, int id, Device* attachedTo);
 
     virtual void updatePosition(Vector3 newPosition);
-    virtual void updateConnections() = 0;
+    virtual void updateConnections(std::vector<Interface*> interfaces) = 0;
 
     void addDataToRXBuffer(const NetworkData& data);
     void sendData(int targetID, std::string message);

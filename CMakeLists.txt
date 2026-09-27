@@ -33,7 +33,6 @@ add_executable(${PROJECT_NAME} simulator/src/main.cpp
         simulator/src/devices/attachable/interface_wired.cpp
         simulator/src/devices/device_attachable.cpp
         simulator/src/devices/attachable/interface.cpp
-        simulator/src/network/network_node.cpp
         simulator/src/network/network_data.cpp
 )
 

@@ -5,12 +5,14 @@
 #include "devices/device.hpp"
 #include "robot_manager.hpp"
 #include "devices/device_static.hpp"
+#include "devices/attachable/interface.hpp"
 
 class DeviceManager {
 private:
     Graphics* graphics;
 
     std::vector<Device*> devices;
+    static std::vector<Interface*> interfaces;
     RobotManager robotManager;
 
 public:
@@ -19,8 +21,10 @@ public:
     void drawAll();
 
     void addRobot(Robot* robot);
-
     void addStaticDevice(DeviceStatic* device);
+
+    static void addInterface(Interface* interface);
+    static void updateInterfaces();
 };
 
 

@@ -36,6 +36,8 @@ int main() {
 
     while (!WindowShouldClose())
     {
+        DeviceManager::updateInterfaces();
+
         graphics.updateCamera();
         inputManager.handle3DViewInput();
 

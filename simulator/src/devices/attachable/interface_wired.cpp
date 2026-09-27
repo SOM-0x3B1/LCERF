@@ -25,9 +25,9 @@ void InterfaceWired::updatePosition(Vector3 newPosition) {
     }
 }
 
-void InterfaceWired::updateConnections() {
+void InterfaceWired::updateConnections(std::vector<Interface *> interfaces) {
 }
 
 void InterfaceWired::draw() {
-    DrawCube(position, 0.2, 0.1, 0.1, GREEN);
+    DrawCube(position, 0.2, 0.1, 0.1, BLUE);
 }

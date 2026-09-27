@@ -8,6 +8,7 @@
 
 class Device {
 protected:
+    int id;
     Vector3 position{};
     Graphics* graphics;
     std::vector<Device*> attachedDevices;
@@ -18,6 +19,9 @@ public:
 
     Vector3 getPosition();
 
+    void attachDevice(Device* device);
+
+    void drawAttachedDevices();
     virtual void draw() = 0;
 };
 

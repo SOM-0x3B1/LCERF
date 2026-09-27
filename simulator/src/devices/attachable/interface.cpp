@@ -5,13 +5,13 @@ bool Interface::isTargetInterfaceConnected(int targetID) {
 }
 
 Interface::Interface(Vector3 position, Graphics* graphics, int id)
-: DeviceAttachable(position, graphics), networkNode(id, this) {
+: DeviceAttachable(position, graphics) {
     this->id = id;
     this->attachedTo = nullptr;
 }
 
 Interface::Interface(Vector3 position, Graphics* graphics, int id, Device *attachedTo)
-: DeviceAttachable(position, graphics), networkNode(id, this) {
+: DeviceAttachable(position, graphics) {
     this->id = id;
     this->attachedTo = attachedTo;
 }
