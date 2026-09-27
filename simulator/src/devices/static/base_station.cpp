@@ -9,6 +9,17 @@ BaseStation::BaseStation(Vector3 position, Graphics* graphics) : DeviceStatic(po
     auto wirelessAP = new InterfaceWireless(apPos, graphics, this->id, 2);
     this->attachedDevices.push_back(wirelessAP);
     DeviceManager::addInterface(wirelessAP);
+    this->wirelessInterface = wirelessAP;
+
+    Vector3 wiredNetworkInterfacePos = Vector3Add(position, Vector3(0, height, -0.1));
+    auto wiredNetworkInterface = new InterfaceWired(wiredNetworkInterfacePos, graphics, this->id, this);
+    attachedDevices.push_back(wiredNetworkInterface);
+    DeviceManager::addInterface(wiredNetworkInterface);
+    this->wiredInterface = wiredNetworkInterface;
+}
+
+InterfaceWired* BaseStation::getWiredInterface() {
+    return wiredInterface;
 }
 
 void BaseStation::draw() {

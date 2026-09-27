@@ -28,7 +28,7 @@ public:
     explicit Interface(Vector3 position, Graphics* graphics, int id, Device* attachedTo);
 
     virtual void updatePosition(Vector3 newPosition);
-    virtual void updateConnections(std::vector<Interface*> interfaces) = 0;
+    virtual void updateConnections() = 0;
 
     void addDataToRXBuffer(const NetworkData& data);
     void sendData(int targetID, std::string message);

@@ -4,7 +4,7 @@
 
 
 class InterfaceWireless : public Interface{
-private:
+protected:
     float range;
 
     bool isInterfaceConnected(Interface* interface);
@@ -15,7 +15,7 @@ public:
 
     float getRange();
 
-    void updateConnections(std::vector<Interface*> interfaces) override;
+    void updateConnections() override;
 
     void draw() override;
 };

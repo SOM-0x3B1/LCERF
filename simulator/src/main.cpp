@@ -9,7 +9,7 @@
 #include "../include/devices/moving/robot.hpp"
 #include "../include/robot_manager.hpp"
 #include "../include/devices/static/base_station.hpp"
-#include "../include/devices/static/wire.hpp"
+#include "../include/network/wire.hpp"
 
 #define ROBOT_COUNT 5
 
@@ -27,11 +27,10 @@ int main() {
     std::mt19937 mt(rd());
     std::uniform_real_distribution<float> dist(-2.0, 2.0);
 
-    deviceManager.addStaticDevice(new BaseStation(Vector3{0, 0, 0}, &graphics));
     for (int i = 0; i < ROBOT_COUNT; i++) {
         Vector3 robotPosition = {.x = dist(mt), .y = 0, .z = dist(mt)};
-        deviceManager.addRobot(new Robot(robotPosition, &graphics));
-        deviceManager.addStaticDevice(new Wire(robotPosition, Vector3{0, 0, 0}, &graphics));
+        Robot* robot = new Robot(robotPosition, &graphics);
+        deviceManager.addRobot(robot);
     }
 
     while (!WindowShouldClose())

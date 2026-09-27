@@ -27,7 +27,7 @@ add_executable(${PROJECT_NAME} simulator/src/main.cpp
         simulator/src/device_manager.cpp
         simulator/src/devices/static/base_station.cpp
         simulator/src/cave.cpp
-        simulator/src/devices/static/wire.cpp
+        simulator/src/network/wire.cpp
         simulator/src/chunk.cpp
         simulator/src/devices/attachable/interface_wireless.cpp
         simulator/src/devices/attachable/interface_wired.cpp

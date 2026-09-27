@@ -3,10 +3,17 @@
 
 #include <raylib.h>
 #include "../device_movable.hpp"
+#include "../attachable/interface_wired.hpp"
+#include "../attachable/interface_wireless.hpp"
 
 class Robot : public DeviceMovable {
+    InterfaceWired* wiredInterface;
+    InterfaceWireless* wirelessInterface;
+
 public:
     explicit Robot(Vector3 position, Graphics* graphics);
+
+    void connectNewWireTo(InterfaceWired* interface);
 
     void draw() override;
 };

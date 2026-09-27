@@ -6,6 +6,9 @@ std::vector<Interface*> DeviceManager::interfaces;
 
 DeviceManager::DeviceManager(Graphics *graphics) : robotManager(graphics) {
     this->graphics = graphics;
+    auto newBaseStation = new BaseStation(Vector3(0, 0, 0), graphics);
+    addStaticDevice(newBaseStation);
+    this->baseStation = newBaseStation;
 }
 
 void DeviceManager::drawAll() {
@@ -17,6 +20,7 @@ void DeviceManager::drawAll() {
 void DeviceManager::addRobot(Robot* robot) {
     devices.push_back(robot);
     robotManager.addRobot(robot);
+    robot->connectNewWireTo(baseStation->getWiredInterface());
 }
 
 void DeviceManager::addStaticDevice(DeviceStatic *device) {
@@ -29,6 +33,10 @@ void DeviceManager::addInterface(Interface *interface) {
 
 void DeviceManager::updateInterfaces() {
     for (auto interface: interfaces) {
-        interface->updateConnections(interfaces);
+        interface->updateConnections();
     }
+}
+
+std::vector<Interface*>* DeviceManager::getInterfaces() {
+    return &interfaces;
 }

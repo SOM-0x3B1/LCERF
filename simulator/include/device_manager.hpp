@@ -6,6 +6,7 @@
 #include "robot_manager.hpp"
 #include "devices/device_static.hpp"
 #include "devices/attachable/interface.hpp"
+#include "devices/static/base_station.hpp"
 
 class DeviceManager {
 private:
@@ -14,6 +15,8 @@ private:
     std::vector<Device*> devices;
     static std::vector<Interface*> interfaces;
     RobotManager robotManager;
+
+    BaseStation* baseStation;
 
 public:
     explicit DeviceManager(Graphics* graphics);
@@ -25,6 +28,7 @@ public:
 
     static void addInterface(Interface* interface);
     static void updateInterfaces();
+    static std::vector<Interface*>* getInterfaces();
 };
 
 

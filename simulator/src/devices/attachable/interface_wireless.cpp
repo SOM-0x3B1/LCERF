@@ -1,6 +1,7 @@
 #include "../../../include/devices/attachable/interface_wireless.hpp"
 
 #include "raymath.h"
+#include "../../../include/device_manager.hpp"
 
 bool InterfaceWireless::isInterfaceConnected(Interface *interface) {
     auto wirelessInterface = dynamic_cast<InterfaceWireless*>(interface);
@@ -28,9 +29,10 @@ float InterfaceWireless::getRange() {
     return range;
 }
 
-void InterfaceWireless::updateConnections(std::vector<Interface*> interfaces) {
+void InterfaceWireless::updateConnections() {
     connectedInterfaces.clear();
-    for (auto interface: interfaces) {
+    std::vector<Interface*>* interfaces = DeviceManager::getInterfaces();
+    for (auto interface: *interfaces) {
         if (isInterfaceConnected(interface))
             connectedInterfaces.push_back(interface);
     }
