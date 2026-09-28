@@ -1,6 +1,6 @@
 #include "../../../include/devices/moving/robot.hpp"
 
-#include "../../../../cmake-build-release-visual-studio/_deps/raylib-src/src/raymath.h"
+#include "raymath.h"
 #include "../../../include/device_manager.hpp"
 #include "../../../include/devices/attachable/interface_wireless.hpp"
 
