@@ -16,6 +16,8 @@ public:
     void connectNewWireTo(InterfaceWired* interface);
 
     void draw() override;
+
+    void simulationStep() override;
 };
 
 

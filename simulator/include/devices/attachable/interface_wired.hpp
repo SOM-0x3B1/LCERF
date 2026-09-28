@@ -17,6 +17,8 @@ public:
     explicit InterfaceWired(Vector3 position, Graphics* graphics, int id);
     explicit InterfaceWired(Vector3 position, Graphics* graphics, int id, Device* attachedTo);
 
+    void move(Vector3 dV) override;
+
     void connectNewWireToOtherInterface(InterfaceWired* interface);
     void connectExistingWireToOtherInterface(InterfaceWired* interface);
     void connectExistingWireToThisInterface(ConnectedWire connectedWire);

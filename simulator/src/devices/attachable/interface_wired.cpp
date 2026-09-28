@@ -8,6 +8,16 @@ InterfaceWired::InterfaceWired(Vector3 position, Graphics *graphics, int id, Dev
 : Interface(position, graphics, id, attachedTo){
 }
 
+void InterfaceWired::move(Vector3 dV) {
+    Interface::move(dV);
+    for (auto [wire, isConnectedToSecondPosition] : connectedWires) {
+        if (isConnectedToSecondPosition)
+            wire->setSecondPosition(this->position);
+        else
+            wire->setFirstPosition(this->position);
+    }
+}
+
 void InterfaceWired::connectNewWireToOtherInterface(InterfaceWired* interface) {
     Wire* newWire = new Wire(this, interface, graphics);
     auto cwire = ConnectedWire(newWire, false);

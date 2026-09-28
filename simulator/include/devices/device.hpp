@@ -18,11 +18,14 @@ public:
     virtual ~Device();
 
     Vector3 getPosition();
+    virtual void move(Vector3 dV);
 
     void attachDevice(Device* device);
 
     void drawAttachedDevices();
     virtual void draw() = 0;
+
+    virtual void simulationStep();
 };
 
 

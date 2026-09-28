@@ -8,10 +8,11 @@
 #include "../include/input_manager.hpp"
 #include "../include/devices/moving/robot.hpp"
 #include "../include/robot_manager.hpp"
+#include "../include/simulator.hpp"
 #include "../include/devices/static/base_station.hpp"
 #include "../include/network/wire.hpp"
 
-#define ROBOT_COUNT 5
+#define ROBOT_COUNT 10
 
 int main() {
     Graphics graphics;
@@ -33,9 +34,12 @@ int main() {
         deviceManager.addRobot(robot);
     }
 
+    Simulator simulator = Simulator(&cave, &deviceManager);
+
     while (!WindowShouldClose())
     {
         DeviceManager::updateInterfaces();
+        simulator.step();
 
         graphics.updateCamera();
         inputManager.handle3DViewInput();

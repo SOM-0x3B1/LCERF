@@ -1,4 +1,5 @@
 #include "../../include/devices/device.hpp"
+#include "raymath.h"
 
 Device::Device(Vector3 position, Graphics* graphics) {
     id = -1;
@@ -16,6 +17,14 @@ Vector3 Device::getPosition() {
     return position;
 }
 
+void Device::move(Vector3 dV) {
+    this->position = Vector3Add(position, dV);
+    for (auto attachment : attachedDevices) {
+        attachment->move(dV);
+    }
+}
+
+
 void Device::attachDevice(Device* device) {
     attachedDevices.push_back(device);
 }
@@ -25,3 +34,5 @@ void Device::drawAttachedDevices() {
         device->draw();
     }
 }
+
+void Device::simulationStep() { }

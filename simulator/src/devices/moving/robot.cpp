@@ -26,3 +26,7 @@ void Robot::draw() {
     DrawCube(position, 0.15, 0.1, 0.2, YELLOW);
     drawAttachedDevices();
 }
+
+void Robot::simulationStep() {
+    move(Vector3(0,0, 0.001));
+}

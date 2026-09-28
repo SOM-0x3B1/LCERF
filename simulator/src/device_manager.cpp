@@ -2,6 +2,7 @@
 
 #include "../include/devices/attachable/interface.hpp"
 
+std::vector<Device*> DeviceManager::devices;
 std::vector<Interface*> DeviceManager::interfaces;
 
 DeviceManager::DeviceManager(Graphics *graphics) : robotManager(graphics) {
@@ -37,6 +38,10 @@ void DeviceManager::updateInterfaces() {
     }
 }
 
-std::vector<Interface*>* DeviceManager::getInterfaces() {
+std::vector<Device*>* DeviceManager::getDeviceCollection() {
+    return &devices;
+}
+
+std::vector<Interface*>* DeviceManager::getInterfaceCollection() {
     return &interfaces;
 }

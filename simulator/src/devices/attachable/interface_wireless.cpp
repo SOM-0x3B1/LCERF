@@ -31,7 +31,7 @@ float InterfaceWireless::getRange() {
 
 void InterfaceWireless::updateConnections() {
     connectedInterfaces.clear();
-    std::vector<Interface*>* interfaces = DeviceManager::getInterfaces();
+    std::vector<Interface*>* interfaces = DeviceManager::getInterfaceCollection();
     for (auto interface: *interfaces) {
         if (isInterfaceConnected(interface))
             connectedInterfaces.push_back(interface);
@@ -41,7 +41,7 @@ void InterfaceWireless::updateConnections() {
 void InterfaceWireless::draw() {
     DrawCube(position, 0.08, 0.05, 0.1, BLUE);
     if (graphics->getVectorDistanceFromTarget(position) <= range)
-        DrawSphereWires(position, range, 10, 10, Color(0, 0, 255, 50));
+        DrawSphereWires(position, range, 10, 10, Color(0, 0, 255, 100));
     for (auto interface: connectedInterfaces) {
         DrawLine3D(position, interface->getPosition(), BLUE);
     }
