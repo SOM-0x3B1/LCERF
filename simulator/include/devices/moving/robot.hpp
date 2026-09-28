@@ -9,10 +9,12 @@
 class Robot : public DeviceMovable {
     InterfaceWired* wiredInterface;
     InterfaceWireless* wirelessInterface;
+    std::queue<Vector3> movementCheckpoints;
 
 public:
     explicit Robot(Vector3 position, Graphics* graphics);
 
+    void move();
     void connectNewWireTo(InterfaceWired* interface);
 
     void draw() override;

@@ -1,5 +1,7 @@
 #include "../../../include/devices/moving/robot.hpp"
 
+#include <random>
+
 #include "raymath.h"
 #include "../../../include/device_manager.hpp"
 #include "../../../include/devices/attachable/interface_wireless.hpp"
@@ -16,6 +18,30 @@ Robot::Robot(Vector3 position, Graphics* graphics) : DeviceMovable(position, gra
     attachedDevices.push_back(wiredNetworkInterface);
     DeviceManager::addInterface(wiredNetworkInterface);
     this->wiredInterface = wiredNetworkInterface;
+
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_real_distribution<float> dist(-2.0, 2.0);
+
+    Vector3 robotPosition = position;
+    for (int i = 0; i < 20; i++) {
+        robotPosition = Vector3Add(robotPosition, {.x = dist(mt), .y = 0, .z = dist(mt)});
+        movementCheckpoints.push(robotPosition);
+    }
+}
+
+void Robot::move() {
+    Vector3 currCheckPoint = movementCheckpoints.front();
+
+    float distance = Vector3Distance(position, currCheckPoint);
+    if (distance < 0.1) {
+        movementCheckpoints.pop();
+        currCheckPoint = movementCheckpoints.front();
+    }
+
+    Vector3 fullMove = Vector3MoveTowards(position, currCheckPoint, 0.01);
+    Vector3 dV = Vector3Subtract(fullMove, position);
+    DeviceMovable::move(dV);
 }
 
 void Robot::connectNewWireTo(InterfaceWired *interface) {
@@ -28,5 +54,5 @@ void Robot::draw() {
 }
 
 void Robot::simulationStep() {
-    move(Vector3(0,0, 0.001));
+    move();
 }
