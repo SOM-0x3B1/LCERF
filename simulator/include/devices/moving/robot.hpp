@@ -14,7 +14,11 @@ class Robot : public DeviceMovable {
 public:
     explicit Robot(Vector3 position, Graphics* graphics);
 
+
     void move();
+    Vector3* getCurrCheckpoint();
+    Vector3* updateAndGetCurrCheckpoint();
+    void completeCheckpoint();
     void connectNewWireTo(InterfaceWired* interface);
 
     void draw() override;

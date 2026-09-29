@@ -30,18 +30,38 @@ Robot::Robot(Vector3 position, Graphics* graphics) : DeviceMovable(position, gra
     }
 }
 
-void Robot::move() {
-    Vector3 currCheckPoint = movementCheckpoints.front();
+Vector3* Robot::getCurrCheckpoint() {
+    if (movementCheckpoints.empty())
+        return nullptr;
+    return &movementCheckpoints.front();
+}
 
-    float distance = Vector3Distance(position, currCheckPoint);
+Vector3* Robot::updateAndGetCurrCheckpoint() {
+    Vector3* currCheckPoint = getCurrCheckpoint();
+    if (currCheckPoint == nullptr)
+        return nullptr;
+
+    float distance = Vector3Distance(position, *currCheckPoint);
     if (distance < 0.1) {
-        movementCheckpoints.pop();
-        currCheckPoint = movementCheckpoints.front();
+        completeCheckpoint();
+        currCheckPoint = getCurrCheckpoint();
     }
+    return currCheckPoint;
+}
 
-    Vector3 fullMove = Vector3MoveTowards(position, currCheckPoint, 0.01);
-    Vector3 dV = Vector3Subtract(fullMove, position);
+void Robot::move() {
+    Vector3* currCheckPoint = updateAndGetCurrCheckpoint();
+    if (currCheckPoint == nullptr)
+        return;
+
+    Vector3 newPos = Vector3MoveTowards(position, *currCheckPoint, 0.01);
+    Vector3 dV = Vector3Subtract(newPos, position);
     DeviceMovable::move(dV);
+}
+
+void Robot::completeCheckpoint() {
+    if (!movementCheckpoints.empty())
+        movementCheckpoints.pop();
 }
 
 void Robot::connectNewWireTo(InterfaceWired *interface) {

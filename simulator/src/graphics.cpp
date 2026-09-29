@@ -118,7 +118,7 @@ void Graphics::rotateCameraYawAroundTarget(float yaw) {
     updateDeltaVectorFromTarget();
 }
 void Graphics::rotateCameraPitchAroundTarget(float pitch) {
-    CameraPitch(&camera, pitch, false, true, false);
+    CameraPitch(&camera, pitch, true, true, false);
     updateDeltaVectorFromTarget();
 }
 
