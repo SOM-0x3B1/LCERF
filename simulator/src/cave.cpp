@@ -29,6 +29,10 @@ void Cave::LoadCaveModel(const std::string &fileName) {
     }
 }
 
+RayCollision Cave::getRayCollision(Ray ray) {
+    return GetRayCollisionMesh(ray, model.meshes[0], model.transform);
+}
+
 Cave::Cave(const std::string &fileName, Graphics* graphics, Vector3 offset) {
     for (int x = 0; x < CHUNK_COUNT_X; ++x) {
         for (int y = 0; y < CHUNK_COUNT_Y; ++y) {

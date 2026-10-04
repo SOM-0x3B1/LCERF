@@ -8,9 +8,16 @@ class Simulator {
 private:
     Cave* cave;
     DeviceManager* deviceManager;
+    Graphics* graphics;
 
 public:
-    explicit Simulator(Cave* cave, DeviceManager* deviceManager);
+    explicit Simulator(Cave* cave, DeviceManager* deviceManager, Graphics* graphics);
+
+    Cave* getCave();
+    DeviceManager* getDeviceManager();
+    Graphics* getGraphics();
+
+    void init();
 
     void step();
 };

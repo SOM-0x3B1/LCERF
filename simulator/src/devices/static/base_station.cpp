@@ -5,6 +5,8 @@
 #include "../../../include/devices/attachable/interface_wireless.hpp"
 
 BaseStation::BaseStation(Vector3 position, Graphics* graphics) : DeviceStatic(position, graphics) {
+    supportPoints.push_back(this->position);
+
     Vector3 apPos = Vector3Add(position, Vector3(0, height, 0));
     auto wirelessAP = new InterfaceWireless(apPos, graphics, this->id, 2);
     this->attachedDevices.push_back(wirelessAP);

@@ -7,13 +7,25 @@
 #include "../../../include/devices/attachable/interface_wireless.hpp"
 
 Robot::Robot(Vector3 position, Graphics* graphics) : DeviceMovable(position, graphics) {
-    Vector3 wirelessNetworkInterfacePos = Vector3Add(position, Vector3(0, 0.05, 0.045));
+    width = 0.15f;
+    height = 0.1f;
+    length = 0.2f;
+
+    float halfWidth =  width / 2;
+    float halfLen =  length / 2;
+    float bottomY = position.y - height / 2;
+    supportPoints.push_back(Vector3(position.x + halfWidth, bottomY, position.z + halfLen));
+    supportPoints.push_back(Vector3(position.x - halfWidth, bottomY, position.z + halfLen));
+    supportPoints.push_back(Vector3(position.x + halfWidth, bottomY, position.z - halfLen));
+    supportPoints.push_back(Vector3(position.x - halfWidth, bottomY, position.z - halfLen));
+
+    Vector3 wirelessNetworkInterfacePos = Vector3Add(position, Vector3(0, height/2, 0.045));
     auto wirelessNetworkInterface = new InterfaceWireless(wirelessNetworkInterfacePos, graphics, this->id, 1.5f, this);
     attachedDevices.push_back(wirelessNetworkInterface);
     DeviceManager::addInterface(wirelessNetworkInterface);
     this->wirelessInterface = wirelessNetworkInterface;
 
-    Vector3 wiredNetworkInterfacePos = Vector3Add(position, Vector3(0, 0.05, -0.045));
+    Vector3 wiredNetworkInterfacePos = Vector3Add(position, Vector3(0, height/2, -0.045));
     auto wiredNetworkInterface = new InterfaceWired(wiredNetworkInterfacePos, graphics, this->id, this);
     attachedDevices.push_back(wiredNetworkInterface);
     DeviceManager::addInterface(wiredNetworkInterface);
@@ -57,6 +69,11 @@ void Robot::move() {
     Vector3 newPos = Vector3MoveTowards(position, *currCheckPoint, 0.01);
     Vector3 dV = Vector3Subtract(newPos, position);
     DeviceMovable::move(dV);
+}
+
+void Robot::snapToGround() {
+    DeviceMovable::snapToGround();
+    Device::move(Vector3(0, height / 2, 0));
 }
 
 void Robot::completeCheckpoint() {

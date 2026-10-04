@@ -25,6 +25,7 @@ public:
 
     void addRobot(Robot* robot);
     void addStaticDevice(DeviceStatic* device);
+    void setBaseStation(BaseStation* station);
 
     static void addInterface(Interface* interface);
     static void updateInterfaces();

@@ -12,8 +12,6 @@
 #include "../include/devices/static/base_station.hpp"
 #include "../include/network/wire.hpp"
 
-#define ROBOT_COUNT 10
-
 int main() {
     Graphics graphics;
     Vector3 centerPosition = { .x = 0.0f, .y = 0.1f, .z = 0.0f };
@@ -24,17 +22,8 @@ int main() {
     auto deviceManager = DeviceManager(&graphics);
     auto cave = Cave("pisgah-realigned-reduced.obj", &graphics, {0.0f, 0.1f, 0.0f});
 
-    std::random_device rd;
-    std::mt19937 mt(rd());
-    std::uniform_real_distribution<float> dist(-2.0, 2.0);
-
-    for (int i = 0; i < ROBOT_COUNT; i++) {
-        Vector3 robotPosition = {.x = dist(mt), .y = 0, .z = dist(mt)};
-        Robot* robot = new Robot(robotPosition, &graphics);
-        deviceManager.addRobot(robot);
-    }
-
-    Simulator simulator = Simulator(&cave, &deviceManager);
+    auto simulator = Simulator(&cave, &deviceManager, &graphics);
+    simulator.init();
 
     while (!WindowShouldClose())
     {

@@ -7,6 +7,8 @@
 class DeviceAttachable : public Device {
 public:
     DeviceAttachable(Vector3 position, Graphics* graphics);
+
+    void snapToGround() override;
 };
 
 

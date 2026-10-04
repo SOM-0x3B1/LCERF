@@ -29,6 +29,8 @@ public:
     explicit Cave(const std::string& fileName, Graphics* graphics, Vector3 offset);
     ~Cave();
 
+    RayCollision getRayCollision(Ray ray);
+
     void drawPointCloud();
 };
 

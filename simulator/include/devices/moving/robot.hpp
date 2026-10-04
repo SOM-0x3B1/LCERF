@@ -7,15 +7,19 @@
 #include "../attachable/interface_wireless.hpp"
 
 class Robot : public DeviceMovable {
+    float width;
+    float height;
+    float length;
+
     InterfaceWired* wiredInterface;
     InterfaceWireless* wirelessInterface;
     std::queue<Vector3> movementCheckpoints;
-
 public:
     explicit Robot(Vector3 position, Graphics* graphics);
 
-
     void move();
+    void snapToGround() override;
+
     Vector3* getCurrCheckpoint();
     Vector3* updateAndGetCurrCheckpoint();
     void completeCheckpoint();
