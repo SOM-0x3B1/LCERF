@@ -37,6 +37,7 @@ private:
 
 public:
     explicit Chunk(ChunkCoords coords, Graphics* graphics, int chunkSize);
+    ~Chunk();
 
     [[nodiscard]] const std::vector<Vector3> *GetPoints();
 

@@ -51,6 +51,9 @@ Cave::Cave(const std::string &fileName, Graphics* graphics, Vector3 offset) {
 
 Cave::~Cave() {
     UnloadModel(model);
+    for (int i = 0; i < CHUNK_COUNT_X * CHUNK_COUNT_Y; ++i) {
+        delete chunks[i];
+    }
 }
 
 void Cave::drawPointCloud() {

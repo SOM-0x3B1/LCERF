@@ -58,6 +58,13 @@ Chunk::Chunk(ChunkCoords coords, Graphics *graphics, int chunkSize) : coords(coo
     this->graphics = graphics;
 }
 
+Chunk::~Chunk() {
+    UnloadModel(modelFull);
+    UnloadModel(modelHalf);
+    UnloadModel(modelQuarter);
+    UnloadModel(modelMin);
+}
+
 const std::vector<Vector3>* Chunk::GetPoints() {
     return &points;
 }

@@ -45,6 +45,6 @@ void Simulator::init() {
 void Simulator::step() {
     auto devices = *DeviceManager::getDeviceCollection();
     for (auto device: devices) {
-        // device->simulationStep();
+        device->simulationStep();
     }
 }
