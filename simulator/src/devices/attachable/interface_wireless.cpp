@@ -40,8 +40,8 @@ void InterfaceWireless::updateConnections() {
 
 void InterfaceWireless::draw() {
     DrawCube(position, 0.08, 0.05, 0.1, BLUE);
-    if (graphics->getVectorDistanceFromTarget(position) <= range)
-        DrawSphereWires(position, range, 10, 10, Color(0, 0, 255, 100));
+    /*if (graphics->getVectorDistanceFromTarget(position) <= range)
+        DrawSphereWires(position, range, 10, 10, Color(0, 0, 255, 100));*/
     for (auto interface: connectedInterfaces) {
         DrawLine3D(position, interface->getPosition(), BLUE);
     }

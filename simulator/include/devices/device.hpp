@@ -21,6 +21,8 @@ public:
     virtual ~Device();
 
     void setCave(Cave* newCave);
+    std::vector<Vector3> getPointsBelow(Vector3 point);
+    float getDistanceFromGround(Vector3 point);
     Vector3 getPosition();
     virtual void move(Vector3 dV);
     virtual void snapToGround();

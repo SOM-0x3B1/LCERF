@@ -8,12 +8,12 @@
 
 class ChunkCoords {
 public:
-    const int chunkSize;
+    const float chunkSize;
     int x;
     int y;
     explicit ChunkCoords(int x, int y);
-    explicit ChunkCoords(Vector2 v, int chunkSize);
-    explicit ChunkCoords(Vector3 v, int chunkSize);
+    explicit ChunkCoords(Vector2 v, float chunkSize);
+    explicit ChunkCoords(Vector3 v, float chunkSize);
 
     float distanceFrom(ChunkCoords c);
 };
@@ -22,7 +22,7 @@ public:
 class Chunk {
 private:
     const ChunkCoords coords;
-    const int chunkSize;
+    const float chunkSize;
 
     int fullPointCount;
     std::vector<Vector3> points;
@@ -36,10 +36,10 @@ private:
     Mesh GenerateMesh(int resolutionDivider);
 
 public:
-    explicit Chunk(ChunkCoords coords, Graphics* graphics, int chunkSize);
+    explicit Chunk(ChunkCoords coords, Graphics* graphics, float chunkSize);
     ~Chunk();
 
-    [[nodiscard]] const std::vector<Vector3> *GetPoints();
+    [[nodiscard]] std::vector<Vector3> *getPoints();
 
     void AddPoint(Vector3 point);
     void GenChunkModel();

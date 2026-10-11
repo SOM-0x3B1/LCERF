@@ -2,17 +2,17 @@
 #include <thread>
 
 
-ChunkCoords::ChunkCoords(int x, int y) : chunkSize(1) {
+ChunkCoords::ChunkCoords(int x, int y) : chunkSize(1.0f) {
     this->x = x;
     this->y = y;
 }
 
-ChunkCoords::ChunkCoords(Vector2 v, int chunkSize) : chunkSize(chunkSize) {
+ChunkCoords::ChunkCoords(Vector2 v, float chunkSize) : chunkSize(chunkSize) {
     this->x = static_cast<int>(roundf(v.x / chunkSize + chunkSize / 2.0f));
     this->y = static_cast<int>(roundf(v.y / chunkSize + chunkSize / 2.0f));
 }
 
-ChunkCoords::ChunkCoords(Vector3 v, int chunkSize) : chunkSize(chunkSize) {
+ChunkCoords::ChunkCoords(Vector3 v, float chunkSize) : chunkSize(chunkSize) {
     this->x = static_cast<int>(roundf(v.x / chunkSize + chunkSize / 2.0f));
     this->y = static_cast<int>(roundf(v.z / chunkSize + chunkSize / 2.0f));
 }
@@ -53,19 +53,21 @@ Mesh Chunk::GenerateMesh(int resolutionDivider) {
     return mesh;
 }
 
-Chunk::Chunk(ChunkCoords coords, Graphics *graphics, int chunkSize) : coords(coords), chunkSize(chunkSize) {
+Chunk::Chunk(ChunkCoords coords, Graphics *graphics, float chunkSize) : coords(coords), chunkSize(chunkSize) {
     this->fullPointCount = 0;
     this->graphics = graphics;
 }
 
 Chunk::~Chunk() {
-    UnloadModel(modelFull);
-    UnloadModel(modelHalf);
-    UnloadModel(modelQuarter);
-    UnloadModel(modelMin);
+    if (fullPointCount > 0) {
+        UnloadModel(modelFull);
+        UnloadModel(modelHalf);
+        UnloadModel(modelQuarter);
+        UnloadModel(modelMin);
+    }
 }
 
-const std::vector<Vector3>* Chunk::GetPoints() {
+std::vector<Vector3>* Chunk::getPoints() {
     return &points;
 }
 
