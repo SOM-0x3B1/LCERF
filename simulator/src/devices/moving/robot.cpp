@@ -65,6 +65,11 @@ void Robot::moveTowardsCheckpoint() {
     if (abs(newY - prevPos3D.y) > (stuckForTicks > 10 ? 0.06 : 0.03)) {
         completeCheckpoint();
         stuckForTicks++;
+
+        if (stuckForTicks > 20) {
+            moveTo(Vector3(0, 0.1, 0));
+            snapToGround();
+        }
     }
     else {
         Vector2 dV = Vector2Subtract(newPos2D, prevPos2D);
