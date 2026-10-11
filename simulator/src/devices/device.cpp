@@ -29,6 +29,11 @@ void Device::move(Vector3 dV) {
     }
 }
 
+void Device::moveTo(Vector3 pos) {
+    Vector3 dV = Vector3Subtract(pos, position);
+    Device::move(dV);
+}
+
 void Device::snapToGround() {
     float avgYBelow = cave->getMaxYValueInRectangle(
         position,

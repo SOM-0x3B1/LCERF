@@ -35,40 +35,65 @@ Robot::Robot(Vector3 position, Graphics* graphics) : DeviceMovable(position, gra
     std::mt19937 mt(rd());
     std::uniform_real_distribution<float> dist(-2.0, 2.0);
 
-    Vector3 robotPosition = position;
-    for (int i = 0; i < 20; i++) {
-        robotPosition = Vector3Add(robotPosition, {.x = dist(mt), .y = 0, .z = dist(mt)});
+    auto robotPosition = Vector2(position.x, position.z);
+    for (int i = 0; i < 400; i++) {
+        robotPosition = Vector2Add(robotPosition, Vector2(dist(mt), dist(mt)));
         movementCheckpoints.push(robotPosition);
+    }
+
+    stuckForTicks = 0;
+}
+
+void Robot::moveTowardsCheckpoint() {
+    Vector2* currCheckPoint = updateAndGetCurrCheckpoint();
+    if (currCheckPoint == nullptr)
+        return;
+
+    auto prevPos3D = position;
+    auto prevPos2D = Vector2(prevPos3D.x, prevPos3D.z);
+
+    Vector2 newPos2D = Vector2MoveTowards(prevPos2D, *currCheckPoint, 0.01);
+    Vector3 newPos3D = Vector3(newPos2D.x, prevPos3D.y, newPos2D.y);
+
+    float newY = cave->getMaxYValueInRectangle(
+        newPos3D,
+        {0, 0, 0},
+        width + 0.1f,
+        height + 0.1f,
+        length + 0.1f);
+
+    if (abs(newY - prevPos3D.y) > (stuckForTicks > 10 ? 0.06 : 0.03)) {
+        completeCheckpoint();
+        stuckForTicks++;
+    }
+    else {
+        Vector2 dV = Vector2Subtract(newPos2D, prevPos2D);
+        move(Vector3(dV.x, newY - prevPos3D.y, dV.y));
+        stuckForTicks = 0;
     }
 }
 
-Vector3* Robot::getCurrCheckpoint() {
+float Robot::distanceFromCheckpoint(Vector2 p) {
+    return Vector2Distance(Vector2(position.x, position.z), p);
+}
+
+Vector2* Robot::getCurrCheckpoint() {
     if (movementCheckpoints.empty())
         return nullptr;
     return &movementCheckpoints.front();
 }
 
-Vector3* Robot::updateAndGetCurrCheckpoint() {
-    Vector3* currCheckPoint = getCurrCheckpoint();
+Vector2* Robot::updateAndGetCurrCheckpoint() {
+    Vector2* currCheckPoint = getCurrCheckpoint();
     if (currCheckPoint == nullptr)
         return nullptr;
 
-    float distance = Vector3Distance(position, *currCheckPoint);
-    if (distance < 0.1) {
+    float distance = distanceFromCheckpoint(*currCheckPoint);
+    if (distance < 0.01) {
         completeCheckpoint();
         currCheckPoint = getCurrCheckpoint();
     }
     return currCheckPoint;
-}
-
-void Robot::move() {
-    Vector3* currCheckPoint = updateAndGetCurrCheckpoint();
-    if (currCheckPoint == nullptr)
-        return;
-
-    Vector3 newPos = Vector3MoveTowards(position, *currCheckPoint, 0.01);
-    Vector3 dV = Vector3Subtract(newPos, position);
-    DeviceMovable::move(dV);
 }
 
 void Robot::snapToGround() {
@@ -91,5 +116,5 @@ void Robot::draw() {
 }
 
 void Robot::simulationStep() {
-    move();
+    moveTowardsCheckpoint();
 }

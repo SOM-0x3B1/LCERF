@@ -23,6 +23,7 @@ public:
     void setCave(Cave* newCave);
     Vector3 getPosition();
     virtual void move(Vector3 dV);
+    virtual void moveTo(Vector3 pos);
     virtual void snapToGround();
 
     void attachDevice(Device* device);
