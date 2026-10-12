@@ -29,7 +29,7 @@ void Simulator::init() {
     deviceManager->addStaticDevice(baseStation);
     deviceManager->setBaseStation(baseStation);
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 3; i++) {
         Vector3 robotPosition = {.x = dist(mt), .y = 0.1, .z = dist(mt)};
         auto robot = new Robot(robotPosition, graphics);
         deviceManager->addRobot(robot);

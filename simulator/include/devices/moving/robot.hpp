@@ -13,19 +13,22 @@ class Robot : public DeviceMovable {
 
     InterfaceWired* wiredInterface;
     InterfaceWireless* wirelessInterface;
-    std::queue<Vector2> movementCheckpoints;
+    std::deque<Vector2> movementWaypoints;
     int stuckForTicks;
+
+    bool showWaypoints;
 
 public:
     explicit Robot(Vector3 position, Graphics* graphics);
 
-    void moveTowardsCheckpoint();
-    inline float distanceFromCheckpoint(Vector2 p);
+    void moveTowardsWaypoint();
+    inline float distanceFromWaypoint(Vector2 p);
     void snapToGround() override;
 
-    Vector2* getCurrCheckpoint();
-    Vector2* updateAndGetCurrCheckpoint();
-    void completeCheckpoint();
+    Vector2* getCurrWaypoint();
+    Vector2* updateAndGetCurrWaypoint();
+    void completeWaypoint();
+
     void connectNewWireTo(InterfaceWired* interface);
 
     void draw() override;
