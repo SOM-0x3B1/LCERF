@@ -35,6 +35,14 @@ Camera* Graphics::getCamera() {
     return &camera;
 }
 
+int Graphics::getScreenWidth() {
+    return screenWidth;
+}
+
+int Graphics::getScreenHeight() {
+    return screenHeight;
+}
+
 Vector3 Graphics::getTarget() {
     return camera.target;
 }

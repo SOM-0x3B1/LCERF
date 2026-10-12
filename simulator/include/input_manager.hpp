@@ -2,13 +2,15 @@
 #define RAYLIB_TEST_INPUT_MANAGER_H
 
 #include "../include/graphics.hpp"
+#include "menu/side_menu.hpp"
 
 class InputManager {
 private:
-    Graphics*graphics;
+    Graphics* graphics;
+    SideMenu* menu;
 
 public:
-    InputManager(Graphics* graphics);
+    InputManager(Graphics* graphics, SideMenu* sideMenu);
 
     void handle3DViewInput();
 

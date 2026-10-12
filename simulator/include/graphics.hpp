@@ -26,6 +26,8 @@ public:
     void init(int screenWidth, int screenHeight, int fps, Vector3 cam_pos, Vector3 cam_target, const char* title, int renderDistance);
 
     Camera* getCamera();
+    int getScreenWidth();
+    int getScreenHeight();
 
     Vector3 getTarget();
     Vector3 getDeltaVectorFromTarget();

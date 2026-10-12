@@ -10,6 +10,7 @@
 #include "../include/robot_manager.hpp"
 #include "../include/simulator.hpp"
 #include "../include/devices/static/base_station.hpp"
+#include "../include/menu/side_menu.hpp"
 #include "../include/network/wire.hpp"
 
 int main() {
@@ -18,7 +19,8 @@ int main() {
     graphics.init(1024, 720, 60, {.x = 1.5, .y = 1.5, .z = 0}, centerPosition,
         "Lunar Cave Exploration - Simulator", 12);
 
-    auto inputManager = InputManager(&graphics);
+    auto sideMenu = SideMenu(&graphics);
+    auto inputManager = InputManager(&graphics, &sideMenu);
     auto deviceManager = DeviceManager(&graphics);
     auto cave = Cave("pisgah-realigned-reduced.obj", &graphics, {0.0f, 0.1f, 0.0f});
 
@@ -47,6 +49,7 @@ int main() {
 
         EndMode3D();
 
+        sideMenu.draw();
         DrawFPS(10, 10);
 
         EndDrawing();
