@@ -1,17 +1,12 @@
 #include "raylib.h"
-#include "raymath.h"
 #include <random>
 
 #include "../include/cave.hpp"
 #include "../include/device_manager.hpp"
 #include "../include/graphics.hpp"
-#include "../include/input_manager.hpp"
-#include "../include/devices/moving/robot.hpp"
-#include "../include/robot_manager.hpp"
-#include "../include/simulator.hpp"
-#include "../include/devices/static/base_station.hpp"
 #include "../include/menu/side_menu.hpp"
-#include "../include/network/wire.hpp"
+#include "../include/input_manager.hpp"
+#include "../include/simulator.hpp"
 
 int main() {
     Graphics graphics;

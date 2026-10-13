@@ -1,7 +1,7 @@
-#ifndef LCERF_MENU_HPP
-#define LCERF_MENU_HPP
-#include "../graphics.hpp"
+#ifndef LCERF_MENU_WINDOW_HPP
+#define LCERF_MENU_WINDOW_HPP
 
+#include "../graphics.hpp"
 
 class MenuWindow {
 protected:
@@ -14,4 +14,4 @@ public:
 };
 
 
-#endif //LCERF_MENU_HPP
+#endif //LCERF_MENU_WINDOW_HPP

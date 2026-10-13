@@ -1,7 +1,7 @@
 #ifndef RAYLIB_TEST_INPUT_MANAGER_H
 #define RAYLIB_TEST_INPUT_MANAGER_H
 
-#include "../include/graphics.hpp"
+#include "graphics.hpp"
 #include "menu/side_menu.hpp"
 
 class InputManager {
