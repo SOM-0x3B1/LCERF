@@ -6,7 +6,7 @@
 #include "../../../include/device_manager.hpp"
 #include "../../../include/devices/attachable/interface_wireless.hpp"
 
-Robot::Robot(Vector3 position, Graphics* graphics) : DeviceMovable(position, graphics) {
+Robot::Robot(Vector3 position, Graphics* graphics) : DeviceMovable(position, graphics), elevationHistorySize(10) {
     width = 0.15f;
     height = 0.1f;
     length = 0.2f;
@@ -63,9 +63,16 @@ void Robot::moveTowardsWaypoint() {
         height + 0.1f,
         length + 0.1f);
 
-    if (abs(newY - prevPos3D.y) > (stuckForTicks > 10 ? 0.06 : 0.05)) {
+    float dY = newY - prevPos3D.y;
+
+    float totalElevationChange = 0.0f;
+    for (auto y: elevationHistory)
+        totalElevationChange += y;
+    totalElevationChange += dY;
+
+    if (abs(totalElevationChange) > 0.2 || dY > 0.1) {
         stuckForTicks++;
-        if (stuckForTicks > 20) {
+        if (stuckForTicks > 50) {
             completeWaypoint();
             moveTo(Vector3(0, 0.1, 0));
             snapToGround();
@@ -73,8 +80,10 @@ void Robot::moveTowardsWaypoint() {
     }
     else {
         Vector2 dV = Vector2Subtract(newPos2D, prevPos2D);
-        move(Vector3(dV.x, newY - prevPos3D.y, dV.y));
+        move(Vector3(dV.x, dY, dV.y));
         stuckForTicks = 0;
+        elevationHistory.pop_front();
+        elevationHistory.push_back(dY);
     }
 
     showWaypoints = true;
@@ -106,6 +115,10 @@ Vector2* Robot::updateAndGetCurrWaypoint() {
 void Robot::snapToGround() {
     DeviceMovable::snapToGround();
     Device::move(Vector3(0, height / 2, 0));
+
+    elevationHistory.clear();
+    for (int i = 0; i < elevationHistorySize; ++i)
+        elevationHistory.push_back(0.0f);
 }
 
 void Robot::completeWaypoint() {

@@ -13,7 +13,10 @@ class Robot : public DeviceMovable {
 
     InterfaceWired* wiredInterface;
     InterfaceWireless* wirelessInterface;
+
     std::deque<Vector2> movementWaypoints;
+    std::deque<float> elevationHistory;
+    const int elevationHistorySize;
     int stuckForTicks;
 
     bool showWaypoints;
