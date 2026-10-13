@@ -12,6 +12,7 @@ class DeviceManager {
 private:
     Graphics* graphics;
 
+    Device* selectedDevice;
     static std::vector<Device*> devices;
     static std::vector<Interface*> interfaces;
     RobotManager robotManager;
@@ -26,6 +27,9 @@ public:
     void addRobot(Robot* robot);
     void addStaticDevice(DeviceStatic* device);
     void setBaseStation(BaseStation* station);
+
+    void selectDevice(int index);
+    void focusCameraOnSelectedDevice();
 
     static void addInterface(Interface* interface);
     static void updateInterfaces();

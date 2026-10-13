@@ -43,6 +43,8 @@ public:
     void updateCamera();
 
     void moveCameraToPos(Vector3 position);
+    void moveTargetToPos(Vector3 position);
+
     void moveCameraForward(float distance);
     void moveCameraRight(float distance);
     void moveCameraUp(float distance);

@@ -7,6 +7,8 @@ std::vector<Interface*> DeviceManager::interfaces;
 
 DeviceManager::DeviceManager(Graphics *graphics) : robotManager(graphics) {
     this->graphics = graphics;
+    this->selectedDevice = nullptr;
+    this->baseStation = nullptr;
 }
 
 void DeviceManager::drawAll() {
@@ -27,6 +29,16 @@ void DeviceManager::addStaticDevice(DeviceStatic *device) {
 
 void DeviceManager::setBaseStation(BaseStation* station) {
     this->baseStation = station;
+}
+
+void DeviceManager::selectDevice(int index) {
+    selectedDevice = devices[index];
+}
+
+void DeviceManager::focusCameraOnSelectedDevice() {
+    if (selectedDevice != nullptr) {
+        graphics->moveTargetToPos(selectedDevice->getPosition());
+    }
 }
 
 void DeviceManager::addInterface(Interface *interface) {

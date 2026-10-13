@@ -40,6 +40,8 @@ void Simulator::init() {
         device->setCave(cave);
         device->snapToGround();
     }
+
+    deviceManager->selectDevice(1);
 }
 
 void Simulator::step() {
@@ -47,4 +49,5 @@ void Simulator::step() {
     for (auto device: devices) {
         device->simulationStep();
     }
+    deviceManager->focusCameraOnSelectedDevice();
 }

@@ -91,6 +91,12 @@ void Graphics::moveCameraToPos(Vector3 position) {
     updateCamera();
 }
 
+void Graphics::moveTargetToPos(Vector3 position) {
+    setTarget(position);
+    camera.position = Vector3Add(position, deltaVectorFromTarget);
+    updateCamera();
+}
+
 
 void Graphics::correctTarget(Vector3 ogPos) {
     const Vector3 diffPos = Vector3Subtract(ogPos, camera.position);
@@ -98,15 +104,12 @@ void Graphics::correctTarget(Vector3 ogPos) {
 }
 
 void Graphics::moveCameraForward(float distance) {
-    const Vector3 ogPos = camera.position;
     CameraMoveForward(&camera, distance, true);
 }
 void Graphics::moveCameraRight(float distance) {
-    const Vector3 ogPos = camera.position;
     CameraMoveRight(&camera, distance, true);
 }
 void Graphics::moveCameraUp(float distance) {
-    const Vector3 ogPos = camera.position;
     CameraMoveUp(&camera, distance);
 }
 void Graphics::zoomCamera(float delta) {
