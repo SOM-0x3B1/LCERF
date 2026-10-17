@@ -9,19 +9,20 @@
 class SideMenu : public MenuWindow {
 private:
     int width;
-    bool enabled;
-    std::vector<MenuContent> layout;
-    std::vector<MenuContent> options;
+    std::vector<MenuContent*> layout;
+    std::vector<MenuContent*> options;
     int selectedOptionIndex;
 
 public:
     explicit SideMenu(Graphics* graphics);
 
-    bool toggle();
-    bool isEnabled();
+    void addToLayout(MenuContent* content);
+    void addToLayout(std::vector<MenuContent*> layout);
+
+    void resetSelection();
     void stepDownSelectedOption();
     void stepUpSelectedOption();
-    void select();
+    std::vector<std::string> select();
 
     void draw() override;
 };

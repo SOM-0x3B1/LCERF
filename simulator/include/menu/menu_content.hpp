@@ -1,32 +1,54 @@
 #ifndef LCERF_MENU_CONTENT_HPP
 #define LCERF_MENU_CONTENT_HPP
 
+#include <functional>
 #include <string>
+#include <vector>
 
-enum class OptionActionType {DO_NOTHING, NAVIGATE, FUNCTION};
 enum class MenuContentType {TITLE, LABEL, OPTION};
 
 class OptionAction {
+public:
+    virtual ~OptionAction() = default;
+
+    virtual std::vector<std::string> execute() = 0;
+};
+
+class OptionActionFunction : public OptionAction {
 private:
-    OptionActionType type;
-    std::string navigateTo;
-    void (*function)();
+    std::function<void()> function;
 
 public:
-    OptionAction();
-    explicit OptionAction(std::string navigateTo);
-    explicit OptionAction(void (*function)());
+    explicit OptionActionFunction(std::function<void()> func);
 
-    std::string execute();
+    std::vector<std::string> execute() override;
+};
+
+class OptionActionNavigation : public OptionAction {
+private:
+    std::vector<std::string> navigateTo;
+
+public:
+    explicit OptionActionNavigation(std::vector<std::string> navigateToPath);
+
+    std::vector<std::string> execute() override;
 };
 
 class MenuContent {
-public:
-    explicit MenuContent(MenuContentType type, std::string text);
-
     MenuContentType type;
     std::string text;
-    OptionAction action;
+    OptionAction* action;
+
+public:
+    explicit MenuContent(MenuContentType type, std::string text);
+    MenuContent(MenuContentType type, std::string text, OptionAction *action);
+
+    ~MenuContent();
+
+    MenuContentType getType();
+    std::string getText();
+
+    std::vector<std::string> select();
 };
 
 #endif //LCERF_MENU_CONTENT_HPP

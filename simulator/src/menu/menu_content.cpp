@@ -1,38 +1,50 @@
 #include <utility>
-
+#include <vector>
 #include "../../include/menu/menu_content.hpp"
 
-OptionAction::OptionAction() {
-    this->type = OptionActionType::DO_NOTHING;
-    this->navigateTo = "";
-    this->function = nullptr;
+OptionActionFunction::OptionActionFunction(std::function<void()>func) {
+    this->function = std::move(func);
 }
 
-OptionAction::OptionAction(std::string navigateTo) {
-    this->type = OptionActionType::NAVIGATE;
-    this->navigateTo = std::move(navigateTo);
-    this->function = nullptr;
+std::vector<std::string> OptionActionFunction::execute() {
+    this->function();
+    return {};
 }
 
-OptionAction::OptionAction(void(*function)()) {
-    this->type = OptionActionType::FUNCTION;
-    this->navigateTo = "";
-    this->function = function;
+OptionActionNavigation::OptionActionNavigation(std::vector<std::string> navigateToPath) {
+    this->navigateTo = std::move(navigateToPath);
 }
 
-std::string OptionAction::execute() {
-    switch (type) {
-        case OptionActionType::NAVIGATE:
-            return navigateTo;
-        case OptionActionType::FUNCTION:
-            function();
-            return "";
-        default:
-            return "";
-    }
+std::vector<std::string> OptionActionNavigation::execute() {
+    return navigateTo;
 }
 
 MenuContent::MenuContent(MenuContentType type, std::string text) {
     this->type = type;
     this->text = std::move(text);
+    this->action = nullptr;
+}
+
+MenuContent::MenuContent(MenuContentType type, std::string text, OptionAction* action) {
+    this->type = type;
+    this->text = std::move(text);
+    this->action = action;
+}
+
+MenuContent::~MenuContent() {
+    delete action;
+}
+
+MenuContentType MenuContent::getType() {
+    return type;
+}
+
+std::string MenuContent::getText() {
+    return text;
+}
+
+std::vector<std::string> MenuContent::select() {
+    if (action != nullptr)
+        return action->execute();
+    return {};
 }

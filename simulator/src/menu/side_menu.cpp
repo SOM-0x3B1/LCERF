@@ -4,76 +4,81 @@
 
 SideMenu::SideMenu(Graphics* graphics) : MenuWindow(graphics) {
     width = 300;
-    enabled = false;
     selectedOptionIndex = 0;
+}
 
-    layout.push_back(MenuContent(MenuContentType::TITLE, "LCERF Menu"));
-    layout.push_back(MenuContent(MenuContentType::LABEL, "Navigate"));
-    layout.push_back(MenuContent(MenuContentType::OPTION, "Device management"));
-    layout.push_back(MenuContent(MenuContentType::OPTION, "Simulator actions"));
-    layout.push_back(MenuContent(MenuContentType::OPTION, "Options"));
+void SideMenu::addToLayout(MenuContent* content) {
+    this->layout.push_back(content);
+    if (content->getType() == MenuContentType::OPTION)
+        options.push_back(content);
+}
 
-    for (const auto &element: layout) {
-        if (element.type == MenuContentType::OPTION)
+void SideMenu::addToLayout(std::vector<MenuContent*> layout) {
+    this->layout.append_range(layout);
+    for (auto element: layout) {
+        if (element->getType() == MenuContentType::OPTION)
             options.push_back(element);
     }
 }
 
-bool SideMenu::toggle() {
-    enabled = !enabled;
-    return enabled;
-}
-
-bool SideMenu::isEnabled() {
-    return enabled;
+void SideMenu::resetSelection() {
+    selectedOptionIndex = 0;
 }
 
 void SideMenu::stepDownSelectedOption() {
     selectedOptionIndex++;
-    if (selectedOptionIndex > options.size() - 1)
+    if (selectedOptionIndex > options.size())
         selectedOptionIndex = 0;
 }
 
 void SideMenu::stepUpSelectedOption() {
     selectedOptionIndex--;
     if (selectedOptionIndex < 0)
-        selectedOptionIndex = options.size() - 1;
+        selectedOptionIndex = options.size();
 }
 
-void SideMenu::select() {
+std::vector<std::string> SideMenu::select() {
+    if (selectedOptionIndex < options.size()) {
+        return options[selectedOptionIndex]->select();
+    }
+    else {
+        selectedOptionIndex = 0;
+        return {".."};
+    }
 }
 
 void SideMenu::draw() {
-    if (enabled) {
-        int sw = graphics->getScreenWidth();
-        int sh = graphics->getScreenHeight();
-        DrawRectangle(sw - width, 0, width, sh, Color(255, 255, 255, 180));
+    int sw = graphics->getScreenWidth();
+    int sh = graphics->getScreenHeight();
+    DrawRectangle(sw - width, 0, width, sh, Color(255, 255, 255, 180));
 
-        int startX = sw - width + 10;
-        int currY = 10;
-        int elementCount = layout.size();
-        int currOption = 0;
+    int startX = sw - width + 10;
+    int currY = 10;
+    int elementCount = layout.size();
+    int currOptionIndex = 0;
 
-        for (int i = 0; i < elementCount; ++i) {
-            MenuContent element = layout[i];
-            switch (element.type) {
-                case MenuContentType::TITLE:
-                    DrawText(element.text.c_str(), startX, currY, 36, BLACK);
-                    DrawLineEx(Vector2(startX, currY + 44), Vector2(sw - 10, currY + 44), 3.0f, BLACK);
-                    currY += 60;
-                    break;
-                case MenuContentType::LABEL:
-                    DrawText(element.text.c_str(), startX + 10, currY, 30, BLACK);
-                    currY += 40;
-                    break;
-                case MenuContentType::OPTION:
-                    Color color = (currOption == selectedOptionIndex ? BLUE : BLACK);
-                    DrawText("-", startX + 20, currY, 26, color);
-                    DrawText(element.text.c_str(), startX + 40, currY, 26, color);
-                    currY += 36;
-                    currOption++;
-                    break;
-            }
+    for (int i = 0; i < elementCount; ++i) {
+        MenuContent* element = layout[i];
+        switch (element->getType()) {
+            case MenuContentType::TITLE:
+                DrawText(element->getText().c_str(), startX, currY, 30, BLACK);
+                DrawLineEx(Vector2(startX, currY + 44), Vector2(sw - 10, currY + 44), 3.0f, BLACK);
+                currY += 60;
+                break;
+            case MenuContentType::LABEL:
+                DrawText(element->getText().c_str(), startX + 10, currY, 24, BLACK);
+                currY += 40;
+                break;
+            case MenuContentType::OPTION:
+                Color color = (currOptionIndex == selectedOptionIndex ? BLUE : BLACK);
+                DrawText("-", startX + 12, currY, 26, color);
+                DrawText(element->getText().c_str(), startX + 40, currY, 20, color);
+                currY += 26;
+                currOptionIndex++;
+                break;
         }
     }
+    Color color = (selectedOptionIndex == options.size() ? BLUE : BLACK);
+    DrawText("-", startX + 10, sh - 40, 26, color);
+    DrawText("Back", startX + 30, sh - 40, 26, color);
 }
