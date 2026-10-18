@@ -5,6 +5,8 @@
 
 class NetworkInterface {
     unsigned int connectSocket;
+    int serverPort;
+    std::string serverIP;
     bool connected;
 
     constexpr static int receiveBufferLen = 255;
@@ -16,9 +18,11 @@ public:
 
     bool isConnected();
 
-    void connectTo(int port);
+    void init(std::string ip, int port);
+    void tryConnect();
 
     std::string receiveData();
+    void sendData(std::string data);
 };
 
 

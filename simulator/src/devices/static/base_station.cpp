@@ -32,12 +32,16 @@ void BaseStation::simulationStep() {
     if (!controllerInterface.isConnected()) {
         controllerInterface.tryAcceptConnection();
     }
+    else {
+        controllerInterface.simulationStep();
+    }
 }
 
 void BaseStation::draw() {
     DrawCylinderWires(position, radius, radius, height, 8, GREEN);
     //DrawLine3D(position, Vector3Add(position, Vector3(0, 3, 0)), GREEN);
-    DrawCylinderWires(position, 0.02, 0.02, 5, 3, GREEN);
+    Color color = controllerInterface.isConnected() ? GREEN : RED;
+    DrawCylinderWires(position, 0.02, 0.02, 5, 3, color);
 
     drawAttachedDevices();
 }

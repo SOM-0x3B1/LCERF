@@ -2,6 +2,7 @@
 
 #include <cstdio>
 #include <thread>
+#include <utility>
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -26,7 +27,7 @@ bool NetworkInterface::isConnected() {
     return connected;
 }
 
-void NetworkInterface::connectTo(int port) {
+void NetworkInterface::init(std::string ip, int port) {
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         printf("WSAStartup() error!");
@@ -41,10 +42,15 @@ void NetworkInterface::connectTo(int port) {
     }
     printf("Server socket created\n");
 
+    serverIP = std::move(ip);
+    serverPort = port;
+}
+
+void NetworkInterface::tryConnect() {
     SOCKADDR_IN serverAddr = {0};
     serverAddr.sin_family = AF_INET;  // IPv4
-    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    serverAddr.sin_port = htons(port);
+    serverAddr.sin_addr.s_addr = inet_addr(serverIP.c_str());
+    serverAddr.sin_port = htons(serverPort);
 
     if (connect(connectSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
         printf("connect() error!\n");
@@ -55,6 +61,7 @@ void NetworkInterface::connectTo(int port) {
         return;
     }
     printf("Connected...\n");
+    connected = true;
 }
 
 std::string NetworkInterface::receiveData() {
@@ -66,13 +73,26 @@ std::string NetworkInterface::receiveData() {
         return std::string(receiveBuffer);
     }
     else if (iResult == 0){
+        connected = false;
         printf("Connection closing...\n");
         return "";
     }
     else {
+        connected = false;
         printf("recv failed: %d\n", WSAGetLastError());
         closesocket(connectSocket);
         WSACleanup();
         return "";
+    }
+}
+
+void NetworkInterface::sendData(std::string data) {
+    int iSendResult = send(connectSocket, data.c_str(), data.size(), 0);
+    if (iSendResult == SOCKET_ERROR) {
+        printf("send failed: %d\n", WSAGetLastError());
+        closesocket(connectSocket);
+        WSACleanup();
+        connected = false;
+        return;
     }
 }

@@ -13,6 +13,46 @@
 #endif
 
 
+std::string SimulationNetworkInterface::receiveDataFromSocket() {
+    int iResult;
+
+    iResult = recv(clientSocket, receiveBuffer, receiveBufferLen, 0);
+    if (iResult > 0) {
+        printf(receiveBuffer);
+        printf("\n");
+        return std::string(receiveBuffer);
+    }
+    else if (iResult == 0){
+        connected = false;
+        printf("Connection closing...\n");
+        return "";
+    }
+    else {
+        int err = WSAGetLastError();
+        if (err == WSAEWOULDBLOCK) {
+            return "";
+        }
+        connected = false;
+        printf("recv failed: %d\n", err);
+        closesocket(clientSocket);
+        return "";
+    }
+}
+
+void SimulationNetworkInterface::sendDataToSocket(std::string data) {
+    int iSendResult = send(clientSocket, data.c_str(), data.size(), 0);
+    if (iSendResult == SOCKET_ERROR) {
+        int err = WSAGetLastError();
+        if (err == WSAEWOULDBLOCK) {
+            return;
+        }
+        connected = false;
+        printf("send failed: %d\n", err);
+        closesocket(clientSocket);
+        return;
+    }
+}
+
 SimulationNetworkInterface::SimulationNetworkInterface() {
     serverSocket = INVALID_SOCKET;
     clientSocket = INVALID_SOCKET;
@@ -102,22 +142,24 @@ void SimulationNetworkInterface::tryAcceptConnection() {
     }
 }
 
-std::string SimulationNetworkInterface::receiveData() {
-    int iResult;
-    int iSendResult;
-
-    iResult = recv(clientSocket, receiveBuffer, receiveBufferLen, 0);
-    if (iResult > 0) {
-        return std::string(receiveBuffer);
-    }
-    else if (iResult == 0){
-        printf("Connection closing...\n");
-        return "";
-    }
-    else {
-        printf("recv failed: %d\n", WSAGetLastError());
-        closesocket(clientSocket);
-        WSACleanup();
-        return "";
+void SimulationNetworkInterface::simulationStep() {
+    rx.push(receiveDataFromSocket());
+    if (!tx.empty()) {
+        sendDataToSocket(tx.front());
+        tx.pop();
     }
 }
+
+std::string SimulationNetworkInterface::receiveData() {
+    if (!rx.empty()) {
+        auto data = rx.front();
+        rx.pop();
+        return data;
+    }
+    return "";
+}
+
+void SimulationNetworkInterface::sendData(const std::string& data) {
+    tx.push(data);
+}
+
