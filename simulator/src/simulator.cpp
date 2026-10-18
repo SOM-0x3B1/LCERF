@@ -40,8 +40,6 @@ void Simulator::init() {
         device->setCave(cave);
         device->snapToGround();
     }
-
-    deviceManager->selectDevice(1);
 }
 
 void Simulator::step() {

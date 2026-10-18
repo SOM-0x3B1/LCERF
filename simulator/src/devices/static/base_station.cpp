@@ -18,6 +18,8 @@ BaseStation::BaseStation(Vector3 position, Graphics* graphics) : DeviceStatic(po
     attachedDevices.push_back(wiredNetworkInterface);
     DeviceManager::addInterface(wiredNetworkInterface);
     this->wiredInterface = wiredNetworkInterface;
+
+    controllerInterface.listenOnPort(33222);
 }
 
 InterfaceWired* BaseStation::getWiredInterface() {

@@ -39,6 +39,8 @@ add_executable(${PROJECT_NAME} simulator/src/main.cpp
         simulator/src/menu/menu_window.cpp
         simulator/src/menu/side_menu.cpp
         simulator/src/menu/menu_content.cpp
+        simulator/src/network/simulation_network_interface.cpp
+        simulator/include/network/simulation_network_interface.hpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

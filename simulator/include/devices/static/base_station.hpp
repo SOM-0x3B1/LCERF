@@ -2,14 +2,15 @@
 #define LCERF_BASE_STATION_HPP
 
 #include "../device_static.hpp"
+#include "../../network/simulation_network_interface.hpp"
 #include "../attachable/interface_wired.hpp"
 #include "../attachable/interface_wireless.hpp"
-
 
 class BaseStation : public DeviceStatic {
     const float radius = 0.3f;
     const float height = 0.1f;
 
+    SimulationNetworkInterface controllerInterface;
     InterfaceWired* wiredInterface;
     InterfaceWireless* wirelessInterface;
 
