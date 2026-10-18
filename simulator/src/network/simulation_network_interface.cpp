@@ -24,7 +24,7 @@ SimulationNetworkInterface::~SimulationNetworkInterface() {
     closesocket(clientSocket);
 }
 
-bool SimulationNetworkInterface::isConencted() {
+bool SimulationNetworkInterface::isConnected() {
     return connected;
 }
 
@@ -36,7 +36,7 @@ void SimulationNetworkInterface::listenOnPort(int port) {
     }
     printf("WSAStartup() succeed\n");
 
-    SOCKET serverSocket = socket(PF_INET, SOCK_STREAM, 0);
+    serverSocket = socket(PF_INET, SOCK_STREAM, 0);
     if (serverSocket == INVALID_SOCKET) {
         printf("socket() error!\n");
         return;
@@ -60,25 +60,45 @@ void SimulationNetworkInterface::listenOnPort(int port) {
     }
     printf("Listening...\n");
 
+    unsigned long nonBlockingMode = 1;
+    if (ioctlsocket(serverSocket, FIONBIO, &nonBlockingMode) == SOCKET_ERROR)
+    {
+        printf("ioctlsocket failed: %d\n", WSAGetLastError());
+        return;
+    }
+
     tryAcceptConnection();
 }
 
 void SimulationNetworkInterface::tryAcceptConnection() {
-    clientSocket = INVALID_SOCKET;
+    auto now = std::chrono::steady_clock::now();
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(now - lastTriedConnection).count() > 1000) {
+        lastTriedConnection = now;
 
-    int nfds = 0;
-    fd_set readfds, writefds, exceptfds;
-    constexpr timeval timeout = {.tv_sec = 0, .tv_usec = 100};
-    select(nfds, &readfds, &writefds, &exceptfds, &timeout);
+        printf("Awaiting connection...\n");
 
-    if (std::find(std::begin(readfds.fd_array), std::end(readfds.fd_array), serverSocket) != std::end(readfds.fd_array)) {
+        /*int nfds = 0;
+        fd_set readfds, writefds, exceptfds;
+        constexpr timeval timeout = {.tv_sec = 0, .tv_usec = 500};
+
+        FD_ZERO(&readfds);
+        FD_SET(serverSocket, &readfds);
+        FD_SET(clientSocket, &readfds);
+        auto res = select(nfds, &readfds, &writefds, &exceptfds, &timeout);*/
+
         clientSocket = accept(serverSocket, NULL, NULL);
         if (clientSocket == INVALID_SOCKET) {
-            printf("Accept failed: %d\n", WSAGetLastError());
+            int err = WSAGetLastError();
+            if (err == WSAEWOULDBLOCK) {
+                return;
+            }
+            printf("Accept failed: %d\n", err);
             closesocket(serverSocket);
             WSACleanup();
             return;
         }
+        printf("Client connected\n");
+        connected = true;
     }
 }
 

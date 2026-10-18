@@ -1,5 +1,7 @@
 #include "../../../include/devices/static/base_station.hpp"
 
+#include <chrono>
+
 #include "raymath.h"
 #include "../../../include/device_manager.hpp"
 #include "../../../include/devices/attachable/interface_wireless.hpp"
@@ -24,6 +26,12 @@ BaseStation::BaseStation(Vector3 position, Graphics* graphics) : DeviceStatic(po
 
 InterfaceWired* BaseStation::getWiredInterface() {
     return wiredInterface;
+}
+
+void BaseStation::simulationStep() {
+    if (!controllerInterface.isConnected()) {
+        controllerInterface.tryAcceptConnection();
+    }
 }
 
 void BaseStation::draw() {
