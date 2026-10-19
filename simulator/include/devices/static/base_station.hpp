@@ -17,6 +17,7 @@ class BaseStation : public DeviceStatic {
 public:
     explicit BaseStation(Vector3 position, Graphics* graphics);
 
+    std::string receiveData();
     InterfaceWired* getWiredInterface();
 
     void simulationStep() override;

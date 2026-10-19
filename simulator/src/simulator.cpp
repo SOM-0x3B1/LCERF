@@ -50,4 +50,5 @@ void Simulator::step() {
     for (auto device: devices) {
         device->simulationStep();
     }
+    deviceManager->handleControllerCommand();
 }

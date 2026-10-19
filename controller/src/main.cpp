@@ -1,5 +1,7 @@
 #include <cstdio>
+#include <random>
 
+#include "../../common/include/command.hpp"
 #include "../include/network_interface.hpp"
 #include "external/glfw/src/internal.h"
 
@@ -9,14 +11,20 @@ int main() {
     auto networkInterface = NetworkInterface();
     networkInterface.init("127.0.0.1", 33222);
 
-    for (int i = 0; true; i++) {
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_real_distribution<float> dist(-2.0, 2.0);
+
+    Sleep(2000);
+    while (true) {
         if (networkInterface.isConnected()) {
-            networkInterface.sendData("asd123-");
-            networkInterface.sendData(std::to_string(i));
+            float x = dist(mt);
+            float y = dist(mt);
+            networkInterface.sendData(CommandRobotMoveToPosition(rand() % 3, x, y).toString());
         }
         else {
             networkInterface.tryConnect();
         }
-        Sleep(500);
+        Sleep(1000);
     }
 }

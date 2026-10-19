@@ -41,7 +41,7 @@ add_executable(${PROJECT_NAME}
         src/menu/side_menu.cpp
         src/menu/menu_content.cpp
         src/network/simulation_network_interface.cpp
-        include/network/simulation_network_interface.hpp
+        ../common/src/command.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

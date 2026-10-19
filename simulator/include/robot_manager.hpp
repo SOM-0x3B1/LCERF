@@ -22,6 +22,7 @@ public:
     SideMenuWithSubMenus* getSideMenus();
 
     void addRobot(Robot* robot);
+    Robot* getRobotByID(int id);
 
     void drawRobots();
 

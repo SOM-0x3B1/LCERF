@@ -28,6 +28,7 @@ public:
     inline float distanceFromWaypoint(Vector2 p);
     void snapToGround() override;
 
+    void addWaypoint(Vector2 p);
     Vector2* getCurrWaypoint();
     Vector2* updateAndGetCurrWaypoint();
     void completeWaypoint();

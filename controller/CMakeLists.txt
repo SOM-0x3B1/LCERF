@@ -19,6 +19,7 @@ endif ()
 add_executable(${PROJECT_NAME}
         src/main.cpp
         src/network_interface.cpp
+        ../common/src/command.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

@@ -42,6 +42,7 @@ public:
 
     void registerInterfaces();
     void updateInterfaces();
+    void handleControllerCommand();
 
     std::vector<Interface*>* getInterfaceCollection();
 };

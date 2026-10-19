@@ -43,6 +43,10 @@ void RobotManager::addRobot(Robot* robot) {
     robots.push_back(robot);
 }
 
+Robot* RobotManager::getRobotByID(int id) {
+    return robots[id];
+}
+
 void RobotManager::drawRobots() {
     for (Robot* robot : robots) {
         robot->draw3D();

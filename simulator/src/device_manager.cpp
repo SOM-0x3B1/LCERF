@@ -1,5 +1,6 @@
 #include "../include/device_manager.hpp"
 
+#include "../../common/include/command.hpp"
 #include "../include/devices/attachable/interface.hpp"
 
 DeviceManager::DeviceManager(Graphics* graphics, Menu* menu) : robotManager(graphics, menu) {
@@ -102,6 +103,18 @@ void DeviceManager::registerInterfaces() {
 void DeviceManager::updateInterfaces() {
     for (auto interface: interfaces) {
         interface->updateConnections(&interfaces);
+    }
+}
+
+void DeviceManager::handleControllerCommand() {
+    std::string data = baseStation->receiveData();
+    if (!data.empty()) {
+        std::vector<std::string> parts = Command::split(data);
+        if (parts[0] == "RMP") {
+            int id = std::stoi(parts[1]);
+            auto pos = Vector2(std::stof(parts[2]), std::stof(parts[3]));
+            robotManager.getRobotByID(id)->addWaypoint(pos);
+        }
     }
 }
 

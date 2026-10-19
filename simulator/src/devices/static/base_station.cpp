@@ -12,16 +12,17 @@ BaseStation::BaseStation(Vector3 position, Graphics* graphics) : DeviceStatic(po
     Vector3 apPos = Vector3Add(position, Vector3(0, height, 0));
     auto wirelessAP = new InterfaceWireless(apPos, graphics, this->id, 2);
     this->attachedDevices.push_back(wirelessAP);
-    DeviceManager::addInterface(wirelessAP);
     this->wirelessInterface = wirelessAP;
 
     Vector3 wiredNetworkInterfacePos = Vector3Add(position, Vector3(0, height, -0.1));
     auto wiredNetworkInterface = new InterfaceWired(wiredNetworkInterfacePos, graphics, this->id, this);
     attachedDevices.push_back(wiredNetworkInterface);
-    DeviceManager::addInterface(wiredNetworkInterface);
     this->wiredInterface = wiredNetworkInterface;
-
     controllerInterface.listenOnPort(33222);
+}
+
+std::string BaseStation::receiveData() {
+    return controllerInterface.receiveData();
 }
 
 InterfaceWired* BaseStation::getWiredInterface() {
@@ -34,12 +35,12 @@ void BaseStation::simulationStep() {
     }
     else {
         controllerInterface.simulationStep();
-        std::string received = controllerInterface.receiveData();
+        /*std::string received = controllerInterface.receiveData();
         if (received.empty()) {
             return;
         }
         wiredInterface->sendData(1, received);
-        wirelessInterface->sendData(1, received);
+        wirelessInterface->sendData(1, received);*/
     }
 }
 
