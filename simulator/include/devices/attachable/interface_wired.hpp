@@ -26,7 +26,7 @@ public:
 
     void updateConnections() override;
 
-    void draw() override;
+    void draw3D() override;
 };
 
 

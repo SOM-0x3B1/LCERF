@@ -58,7 +58,7 @@ void InterfaceWired::updateConnections() {
     }
 }
 
-void InterfaceWired::draw() {
+void InterfaceWired::draw3D() {
     DrawCube(position, 0.2, 0.1, 0.1, BLUE);
     for (auto cWire: connectedWires) {
         if (cWire.isAttachedToSecondPosition)

@@ -51,8 +51,10 @@ void Device::attachDevice(Device* device) {
 
 void Device::drawAttachedDevices() {
     for (auto device: attachedDevices) {
-        device->draw();
+        device->draw3D();
     }
 }
+
+void Device::draw2D() { }
 
 void Device::simulationStep() { }

@@ -130,7 +130,7 @@ void Robot::connectNewWireTo(InterfaceWired *interface) {
     wiredInterface->connectNewWireToOtherInterface(interface);
 }
 
-void Robot::draw() {
+void Robot::draw3D() {
     DrawCube(position, 0.15, 0.1, 0.2, YELLOW);
     drawAttachedDevices();
 

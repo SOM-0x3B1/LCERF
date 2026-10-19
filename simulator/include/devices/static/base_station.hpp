@@ -21,7 +21,8 @@ public:
 
     void simulationStep() override;
 
-    void draw() override;
+    void draw3D() override;
+    void draw2D() override;
 };
 
 

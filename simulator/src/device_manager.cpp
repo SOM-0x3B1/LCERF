@@ -44,9 +44,15 @@ void DeviceManager::registerMenus() {
     menu->addSubSideMenu({"device_manager"}, "edit_device", editDeviceMenu);
 }
 
-void DeviceManager::drawAll() {
+void DeviceManager::drawAll3D() {
     for (auto device: devices) {
-        device->draw();
+        device->draw3D();
+    }
+}
+
+void DeviceManager::drawAll2D() {
+    for (auto device: devices) {
+        device->draw2D();
     }
 }
 

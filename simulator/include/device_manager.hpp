@@ -27,7 +27,8 @@ public:
 
     void registerMenus();
 
-    void drawAll();
+    void drawAll3D();
+    void drawAll2D();
 
     void addRobot(Robot* robot);
     void addStaticDevice(DeviceStatic* device);

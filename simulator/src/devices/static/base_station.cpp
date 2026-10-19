@@ -37,11 +37,20 @@ void BaseStation::simulationStep() {
     }
 }
 
-void BaseStation::draw() {
+void BaseStation::draw3D() {
     DrawCylinderWires(position, radius, radius, height, 8, GREEN);
     //DrawLine3D(position, Vector3Add(position, Vector3(0, 3, 0)), GREEN);
     Color color = controllerInterface.isConnected() ? GREEN : RED;
     DrawCylinderWires(position, 0.02, 0.02, 5, 3, color);
 
     drawAttachedDevices();
+}
+
+void BaseStation::draw2D() {
+    if (controllerInterface.isConnected()) {
+        DrawText("CONTROLLER CONNECTED", 10, 33, 20, GREEN);
+    }
+    else {
+        DrawText("CONTROLLER DISCONNECTED", 10, 33, 24, RED);
+    }
 }

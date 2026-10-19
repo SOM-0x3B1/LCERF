@@ -34,7 +34,7 @@ public:
 
     void connectNewWireTo(InterfaceWired* interface);
 
-    void draw() override;
+    void draw3D() override;
 
     void simulationStep() override;
 };

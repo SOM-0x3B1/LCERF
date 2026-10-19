@@ -37,13 +37,14 @@ int main() {
         DrawGrid(20, 1);
         cave.drawPointCloud();
         deviceManager.focusCameraOnSelectedDevice();
-        deviceManager.drawAll();
+        deviceManager.drawAll3D();
         graphics.drawCursor();
 
         EndMode3D();
 
         menu.draw();
         DrawFPS(10, 10);
+        deviceManager.drawAll2D();
 
         EndDrawing();
     }

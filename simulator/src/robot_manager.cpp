@@ -45,7 +45,7 @@ void RobotManager::addRobot(Robot* robot) {
 
 void RobotManager::drawRobots() {
     for (Robot* robot : robots) {
-        robot->draw();
+        robot->draw3D();
     }
 }
 

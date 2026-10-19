@@ -29,7 +29,8 @@ public:
     void attachDevice(Device* device);
 
     void drawAttachedDevices();
-    virtual void draw() = 0;
+    virtual void draw3D() = 0;
+    virtual void draw2D();
 
     virtual void simulationStep();
 };
