@@ -3,7 +3,7 @@
 #include "raylib.h"
 
 SideMenu::SideMenu(Graphics* graphics) : MenuWindow(graphics) {
-    width = 300;
+    width = 400;
     selectedOptionIndex = 0;
 }
 
@@ -50,7 +50,8 @@ std::vector<std::string> SideMenu::select() {
 void SideMenu::draw() {
     int sw = graphics->getScreenWidth();
     int sh = graphics->getScreenHeight();
-    DrawRectangle(sw - width, 0, width, sh, Color(255, 255, 255, 180));
+    DrawRectangle(sw - width, 0, width, sh, Color(0, 0, 0, 180));
+    //DrawLineEx(Vector2(sw - width, 0), Vector2(sw - width, sh), 3.0f, WHITE);
 
     int startX = sw - width + 10;
     int currY = 10;
@@ -61,16 +62,16 @@ void SideMenu::draw() {
         MenuContent* element = layout[i];
         switch (element->getType()) {
             case MenuContentType::TITLE:
-                DrawText(element->getText().c_str(), startX, currY, 30, BLACK);
-                DrawLineEx(Vector2(startX, currY + 44), Vector2(sw - 10, currY + 44), 3.0f, BLACK);
+                DrawText(element->getText().c_str(), startX, currY, 30, WHITE);
+                DrawLineEx(Vector2(startX, currY + 44), Vector2(sw - 10, currY + 44), 3.0f, WHITE);
                 currY += 60;
                 break;
             case MenuContentType::LABEL:
-                DrawText(element->getText().c_str(), startX + 10, currY, 24, BLACK);
+                DrawText(element->getText().c_str(), startX + 10, currY, 24, WHITE);
                 currY += 40;
                 break;
             case MenuContentType::OPTION:
-                Color color = (currOptionIndex == selectedOptionIndex ? BLUE : BLACK);
+                Color color = (currOptionIndex == selectedOptionIndex ? BLUE : WHITE);
                 DrawText("-", startX + 12, currY, 26, color);
                 DrawText(element->getText().c_str(), startX + 40, currY, 20, color);
                 currY += 26;
@@ -78,7 +79,7 @@ void SideMenu::draw() {
                 break;
         }
     }
-    Color color = (selectedOptionIndex == options.size() ? BLUE : BLACK);
+    Color color = (selectedOptionIndex == options.size() ? BLUE : WHITE);
     DrawText("-", startX + 10, sh - 40, 26, color);
     DrawText("Back", startX + 30, sh - 40, 26, color);
 }
