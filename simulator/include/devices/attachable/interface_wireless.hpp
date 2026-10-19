@@ -15,7 +15,7 @@ public:
 
     float getRange();
 
-    void updateConnections() override;
+    void updateConnections(std::vector<Interface*>* interfaces) override;
 
     void draw3D() override;
 };

@@ -35,15 +35,18 @@ void Simulator::init() {
         deviceManager->addRobot(robot);
     }
 
-    auto devices = *DeviceManager::getDeviceCollection();
+    auto devices = *deviceManager->getDeviceCollection();
     for (auto device: devices) {
         device->setCave(cave);
         device->snapToGround();
     }
+
+    deviceManager->registerInterfaces();
+    deviceManager->assignIDs();
 }
 
 void Simulator::step() {
-    auto devices = *DeviceManager::getDeviceCollection();
+    auto devices = *deviceManager->getDeviceCollection();
     for (auto device: devices) {
         device->simulationStep();
     }

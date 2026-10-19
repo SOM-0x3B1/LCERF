@@ -2,7 +2,7 @@
 #include "raymath.h"
 
 Device::Device(Vector3 position, Graphics* graphics) {
-    id = -1;
+    this->id = -1;
     this->position = position;
     this->graphics = graphics;
     this->cave = nullptr;
@@ -43,6 +43,18 @@ void Device::snapToGround() {
         0.2);
     float dV = position.y - avgYBelow;
     move(Vector3(0, -dV, 0));
+}
+
+std::vector<Device *> Device::getAttachedInterfaces() {
+    return attachedInterfaces;
+}
+
+void Device::assignID(int id) {
+    this->id = id;
+}
+
+int Device::getID() {
+    return id;
 }
 
 void Device::attachDevice(Device* device) {

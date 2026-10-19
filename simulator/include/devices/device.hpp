@@ -14,6 +14,7 @@ protected:
     Graphics* graphics;
     Cave* cave;
     std::vector<Device*> attachedDevices;
+    std::vector<Device*> attachedInterfaces;
     std::vector<Vector3> supportPoints;
 
 public:
@@ -21,11 +22,16 @@ public:
     virtual ~Device();
 
     void setCave(Cave* newCave);
+
     Vector3 getPosition();
     virtual void move(Vector3 dV);
     virtual void moveTo(Vector3 pos);
     virtual void snapToGround();
 
+    std::vector<Device*> getAttachedInterfaces();
+
+    void assignID(int id);
+    int getID();
     void attachDevice(Device* device);
 
     void drawAttachedDevices();

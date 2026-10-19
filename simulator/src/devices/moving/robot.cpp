@@ -22,13 +22,13 @@ Robot::Robot(Vector3 position, Graphics* graphics) : DeviceMovable(position, gra
     Vector3 wirelessNetworkInterfacePos = Vector3Add(position, Vector3(0, height/2, 0.045));
     auto wirelessNetworkInterface = new InterfaceWireless(wirelessNetworkInterfacePos, graphics, this->id, 1.5f, this);
     attachedDevices.push_back(wirelessNetworkInterface);
-    DeviceManager::addInterface(wirelessNetworkInterface);
+    attachedInterfaces.push_back(wirelessNetworkInterface);
     this->wirelessInterface = wirelessNetworkInterface;
 
     Vector3 wiredNetworkInterfacePos = Vector3Add(position, Vector3(0, height/2, -0.045));
     auto wiredNetworkInterface = new InterfaceWired(wiredNetworkInterfacePos, graphics, this->id, this);
     attachedDevices.push_back(wiredNetworkInterface);
-    DeviceManager::addInterface(wiredNetworkInterface);
+    attachedInterfaces.push_back(wiredNetworkInterface);
     this->wiredInterface = wiredNetworkInterface;
 
     std::random_device rd;

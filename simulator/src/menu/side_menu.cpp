@@ -3,7 +3,7 @@
 #include "raylib.h"
 
 SideMenu::SideMenu(Graphics* graphics) : MenuWindow(graphics) {
-    width = 400;
+    width = 350;
     selectedOptionIndex = 0;
 }
 

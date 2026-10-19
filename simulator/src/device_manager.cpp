@@ -2,9 +2,6 @@
 
 #include "../include/devices/attachable/interface.hpp"
 
-std::vector<Device*> DeviceManager::devices;
-std::vector<Interface*> DeviceManager::interfaces;
-
 DeviceManager::DeviceManager(Graphics* graphics, Menu* menu) : robotManager(graphics, menu) {
     this->menu = menu;
     this->graphics = graphics;
@@ -93,13 +90,18 @@ void DeviceManager::focusCameraOnSelectedDevice() {
     }
 }
 
-void DeviceManager::addInterface(Interface *interface) {
-    interfaces.push_back(interface);
+void DeviceManager::registerInterfaces() {
+    for (auto device: devices) {
+        auto devInterfaces = device->getAttachedInterfaces();
+        for (auto interface: devInterfaces) {
+            this->interfaces.push_back(dynamic_cast<Interface*>(interface));
+        }
+    }
 }
 
 void DeviceManager::updateInterfaces() {
     for (auto interface: interfaces) {
-        interface->updateConnections();
+        interface->updateConnections(&interfaces);
     }
 }
 
@@ -109,4 +111,11 @@ std::vector<Device*>* DeviceManager::getDeviceCollection() {
 
 std::vector<Interface*>* DeviceManager::getInterfaceCollection() {
     return &interfaces;
+}
+
+void DeviceManager::assignIDs() {
+    int size = interfaces.size();
+    for (int i = 0; i < size; ++i) {
+        interfaces[i]->assignID(i + 1);
+    }
 }

@@ -16,8 +16,8 @@ private:
     SideMenuWithSubMenus* sideMenus;
 
     Device* selectedDevice;
-    static std::vector<Device*> devices;
-    static std::vector<Interface*> interfaces;
+    std::vector<Device*> devices;
+    std::vector<Interface*> interfaces;
     RobotManager robotManager;
 
     BaseStation* baseStation;
@@ -33,15 +33,17 @@ public:
     void addRobot(Robot* robot);
     void addStaticDevice(DeviceStatic* device);
     void setBaseStation(BaseStation* station);
+    std::vector<Device*>* getDeviceCollection();
+    void assignIDs();
 
     void selectDevice(int index);
     void deselectDevice();
     void focusCameraOnSelectedDevice();
 
-    static void addInterface(Interface* interface);
-    static void updateInterfaces();
-    static std::vector<Device*>* getDeviceCollection();
-    static std::vector<Interface*>* getInterfaceCollection();
+    void registerInterfaces();
+    void updateInterfaces();
+
+    std::vector<Interface*>* getInterfaceCollection();
 };
 
 

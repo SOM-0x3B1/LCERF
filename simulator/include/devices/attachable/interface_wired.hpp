@@ -24,7 +24,7 @@ public:
     void connectExistingWireToThisInterface(ConnectedWire connectedWire);
     void updatePosition(Vector3 newPosition) override;
 
-    void updateConnections() override;
+    void updateConnections(std::vector<Interface*>* interfaces) override;
 
     void draw3D() override;
 };

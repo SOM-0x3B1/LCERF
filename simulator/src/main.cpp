@@ -24,7 +24,7 @@ int main() {
 
     while (!WindowShouldClose())
     {
-        DeviceManager::updateInterfaces();
+        deviceManager.updateInterfaces();
         simulator.step();
 
         graphics.updateCamera();

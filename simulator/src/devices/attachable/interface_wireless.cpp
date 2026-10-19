@@ -29,9 +29,8 @@ float InterfaceWireless::getRange() {
     return range;
 }
 
-void InterfaceWireless::updateConnections() {
+void InterfaceWireless::updateConnections(std::vector<Interface*>* interfaces) {
     connectedInterfaces.clear();
-    std::vector<Interface*>* interfaces = DeviceManager::getInterfaceCollection();
     for (auto interface: *interfaces) {
         if (isInterfaceConnected(interface))
             connectedInterfaces.push_back(interface);

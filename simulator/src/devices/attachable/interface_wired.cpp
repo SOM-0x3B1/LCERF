@@ -46,7 +46,7 @@ void InterfaceWired::updatePosition(Vector3 newPosition) {
     }
 }
 
-void InterfaceWired::updateConnections() {
+void InterfaceWired::updateConnections(std::vector<Interface*>* interfaces) {
     for (auto [wire, isAttachedToSecondPosition]: connectedWires) {
         Interface* connectedInterface;
         if (isAttachedToSecondPosition)
