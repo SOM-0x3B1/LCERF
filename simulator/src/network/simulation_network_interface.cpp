@@ -143,7 +143,9 @@ void SimulationNetworkInterface::tryAcceptConnection() {
 }
 
 void SimulationNetworkInterface::simulationStep() {
-    rx.push(receiveDataFromSocket());
+    std::string received = receiveDataFromSocket();
+    if (!received.empty())
+        rx.push(received);
     if (!tx.empty()) {
         sendDataToSocket(tx.front());
         tx.pop();

@@ -34,6 +34,12 @@ void BaseStation::simulationStep() {
     }
     else {
         controllerInterface.simulationStep();
+        std::string received = controllerInterface.receiveData();
+        if (received.empty()) {
+            return;
+        }
+        wiredInterface->sendData(1, received);
+        wirelessInterface->sendData(1, received);
     }
 }
 
