@@ -82,6 +82,10 @@ void Menu::addSubSideMenu(const std::vector<std::string>& path, const std::strin
     currMenu->addSubSideMenu(name, sideMenu);
 }
 
+void Menu::addLogWindow(LogWindow* window) {
+    logWindows.push_back(window);
+}
+
 bool Menu::toggle() {
     enabled = !enabled;
     return enabled;
@@ -113,6 +117,9 @@ void Menu::back() {
 void Menu::draw() {
     if (enabled) {
         currSideMenu->getMainSideMenu()->draw();
+    }
+    for (auto window : logWindows) {
+        window->draw();
     }
 }
 

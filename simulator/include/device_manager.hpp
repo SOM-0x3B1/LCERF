@@ -14,6 +14,7 @@ private:
     Graphics* graphics;
     Menu* menu;
     SideMenuWithSubMenus* sideMenus;
+    LogWindow* logWindow;
 
     Device* selectedDevice;
     std::vector<Device*> devices;

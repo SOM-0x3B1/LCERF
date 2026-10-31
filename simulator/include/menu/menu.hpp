@@ -1,9 +1,10 @@
 #ifndef LCERF_MENU_HPP
 #define LCERF_MENU_HPP
 
-#include <map>
 #include <unordered_map>
 #include <vector>
+
+#include "log_window.hpp"
 #include "side_menu.hpp"
 
 class SideMenuWithSubMenus {
@@ -29,6 +30,7 @@ private:
     bool enabled;
     SideMenuWithSubMenus mainSideMenu;
     SideMenuWithSubMenus* currSideMenu;
+    std::vector<LogWindow*> logWindows;
 
     SideMenuWithSubMenus* navigateToPath(const std::vector<std::string> &path);
 
@@ -40,6 +42,8 @@ public:
     void addSectionToMainSideMenu(MenuContent* content);
     void addSectionToMainSideMenu(std::vector<MenuContent*> layout);
     void addSubSideMenu(const std::vector<std::string>& path, const std::string& name, SideMenuWithSubMenus* sideMenu);
+
+    void addLogWindow(LogWindow* window);
 
     bool toggle();
     bool isEnabled();

@@ -50,7 +50,7 @@ std::vector<std::string> SideMenu::select() {
 void SideMenu::draw() {
     int sw = graphics->getScreenWidth();
     int sh = graphics->getScreenHeight();
-    DrawRectangle(sw - width, 0, width, sh, Color(0, 0, 0, 180));
+    DrawRectangle(sw - width, 0, width, sh, defaultBackgroundColor);
     //DrawLineEx(Vector2(sw - width, 0), Vector2(sw - width, sh), 3.0f, WHITE);
 
     int startX = sw - width + 10;

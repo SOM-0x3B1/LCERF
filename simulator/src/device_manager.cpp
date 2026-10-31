@@ -40,6 +40,9 @@ void DeviceManager::registerMenus() {
     });
     auto editDeviceMenu = new SideMenuWithSubMenus(sideMenu);
     menu->addSubSideMenu({"device_manager"}, "edit_device", editDeviceMenu);
+
+    logWindow = new LogWindow(graphics);
+    menu->addLogWindow(logWindow);
 }
 
 void DeviceManager::drawAll3D() {
@@ -115,6 +118,7 @@ void DeviceManager::handleControllerCommand() {
             auto pos = Vector2(std::stof(parts[2]), std::stof(parts[3]));
             robotManager.getRobotByID(id)->addWaypoint(pos);
         }
+        logWindow->addLog(data);
     }
 }
 

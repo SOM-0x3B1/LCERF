@@ -5,7 +5,10 @@
 
 class MenuWindow {
 protected:
+    int width;
+    int height;
     Graphics* graphics;
+    static Color defaultBackgroundColor;
 
 public:
     explicit MenuWindow(Graphics* graphics);
