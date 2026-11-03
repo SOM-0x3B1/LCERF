@@ -20,6 +20,11 @@ add_executable(${PROJECT_NAME}
         src/main.cpp
         src/network_interface.cpp
         ../common/src/command.cpp
+        src/robot.cpp
+        src/robot_manager.cpp
+        src/controller.cpp
+        ../common/src/command_handler.cpp
+        ../common/src/command_event.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
