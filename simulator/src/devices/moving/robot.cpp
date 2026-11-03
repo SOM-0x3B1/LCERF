@@ -11,6 +11,8 @@ Robot::Robot(Vector3 position, Graphics* graphics) : DeviceMovable(position, gra
     height = 0.1f;
     length = 0.2f;
 
+    speed = 0.008;
+
     float halfWidth =  width / 2;
     float halfLen =  length / 2;
     float bottomY = position.y - height / 2;
@@ -47,7 +49,7 @@ void Robot::moveTowardsWaypoint() {
     auto prevPos3D = position;
     auto prevPos2D = Vector2(prevPos3D.x, prevPos3D.z);
 
-    Vector2 newPos2D = Vector2MoveTowards(prevPos2D, *currWaypoint, 0.01);
+    Vector2 newPos2D = Vector2MoveTowards(prevPos2D, *currWaypoint, speed);
     Vector3 newPos3D = Vector3(newPos2D.x, prevPos3D.y, newPos2D.y);
 
     float newY = cave->getMaxYValueInRectangle(

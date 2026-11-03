@@ -12,6 +12,8 @@ class Robot : public DeviceMovable {
     float height;
     float length;
 
+    float speed;
+
     InterfaceWired* wiredInterface;
     InterfaceWireless* wirelessInterface;
 
