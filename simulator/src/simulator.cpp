@@ -25,7 +25,7 @@ void Simulator::init() {
     std::mt19937 mt(rd());
     std::uniform_real_distribution<float> dist(-1.0, 1.0);
 
-    auto baseStation = new BaseStation(Vector3(0, 0.2, 0), graphics);
+    auto baseStation = new BaseStation(Vector3(0, 0.2, 0), graphics, deviceManager->getControllerInterface());
     deviceManager->addStaticDevice(baseStation);
     deviceManager->setBaseStation(baseStation);
 
@@ -43,6 +43,7 @@ void Simulator::init() {
 
     deviceManager->registerInterfaces();
     deviceManager->assignIDs();
+    deviceManager->registerRobots();
 }
 
 void Simulator::step() {
@@ -50,5 +51,5 @@ void Simulator::step() {
     for (auto device: devices) {
         device->simulationStep();
     }
-    deviceManager->handleControllerCommand();
+    deviceManager->handleControllerCommands();
 }

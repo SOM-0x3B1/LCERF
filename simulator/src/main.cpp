@@ -15,9 +15,12 @@ int main() {
         "Lunar Cave Exploration - Simulator", 12);
 
     auto menu = Menu(&graphics);
-    auto deviceManager = DeviceManager(&graphics, &menu);
+    auto controllerInterface = SimulationNetworkInterface();
+    auto deviceManager = DeviceManager(&graphics, &menu, &controllerInterface);
     auto inputManager = InputManager(&graphics, &deviceManager, &menu);
     auto cave = Cave("pisgah-realigned-reduced.obj", &graphics, {0.0f, 0.1f, 0.0f});
+
+    controllerInterface.listenOnPort(33222);
 
     auto simulator = Simulator(&cave, &deviceManager, &graphics);
     simulator.init();

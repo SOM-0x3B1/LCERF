@@ -3,6 +3,7 @@
 
 #include <raylib.h>
 #include "../device_movable.hpp"
+#include "../../network/simulation_network_interface.hpp"
 #include "../attachable/interface_wired.hpp"
 #include "../attachable/interface_wireless.hpp"
 
@@ -14,6 +15,9 @@ class Robot : public DeviceMovable {
     InterfaceWired* wiredInterface;
     InterfaceWireless* wirelessInterface;
 
+    // TODO: Replace with network simulation
+    SimulationNetworkInterface* controllerInterface;
+
     std::deque<Vector2> movementWaypoints;
     std::deque<float> elevationHistory;
     const int elevationHistorySize;
@@ -23,6 +27,9 @@ class Robot : public DeviceMovable {
 
 public:
     explicit Robot(Vector3 position, Graphics* graphics);
+
+    // TODO: Replace with network simulation
+    void addControllerInterface(SimulationNetworkInterface* controllerInterface);
 
     void moveTowardsWaypoint();
     inline float distanceFromWaypoint(Vector2 p);

@@ -1,9 +1,11 @@
 #include "../include/robot_manager.hpp"
+#include "../../common/include/command.hpp"
 
 #include "raymath.h"
 
-RobotManager::RobotManager(Graphics* graphics, Menu* menu) {
+RobotManager::RobotManager(Graphics* graphics, Menu* menu, SimulationNetworkInterface* controllerInterface) {
     this->graphics = graphics;
+    this->controllerInterface = controllerInterface;
     this->robots = std::vector<Robot*>();
     this->menu = menu;
     SideMenuWithSubMenus* sideMenus;
@@ -40,11 +42,21 @@ SideMenuWithSubMenus* RobotManager::getSideMenus() {
 }
 
 void RobotManager::addRobot(Robot* robot) {
+    // TODO: ?
+    robot->assignID(robots.size());
+    robot->addControllerInterface(controllerInterface);
     robots.push_back(robot);
 }
 
 Robot* RobotManager::getRobotByID(int id) {
     return robots[id];
+}
+
+void RobotManager::registerRobots() {
+    for (auto robot: robots) {
+        controllerInterface->sendData(CommandRobotRegister(robot->getID()).toString());
+    }
+    controllerInterface->sendData(CommandRobotRegisterFinish().toString());
 }
 
 void RobotManager::drawRobots() {

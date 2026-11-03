@@ -6,7 +6,8 @@
 #include "../../../include/device_manager.hpp"
 #include "../../../include/devices/attachable/interface_wireless.hpp"
 
-BaseStation::BaseStation(Vector3 position, Graphics* graphics) : DeviceStatic(position, graphics) {
+BaseStation::BaseStation(Vector3 position, Graphics* graphics, SimulationNetworkInterface* controllerInterface)
+    : DeviceStatic(position, graphics) {
     supportPoints.push_back(this->position);
 
     Vector3 apPos = Vector3Add(position, Vector3(0, height, 0));
@@ -18,11 +19,8 @@ BaseStation::BaseStation(Vector3 position, Graphics* graphics) : DeviceStatic(po
     auto wiredNetworkInterface = new InterfaceWired(wiredNetworkInterfacePos, graphics, this->id, this);
     attachedDevices.push_back(wiredNetworkInterface);
     this->wiredInterface = wiredNetworkInterface;
-    controllerInterface.listenOnPort(33222);
-}
 
-std::string BaseStation::receiveData() {
-    return controllerInterface.receiveData();
+    this->controllerInterface = controllerInterface;
 }
 
 InterfaceWired* BaseStation::getWiredInterface() {
@@ -30,11 +28,11 @@ InterfaceWired* BaseStation::getWiredInterface() {
 }
 
 void BaseStation::simulationStep() {
-    if (!controllerInterface.isConnected()) {
-        controllerInterface.tryAcceptConnection();
+    if (!controllerInterface->isConnected()) {
+        controllerInterface->tryAcceptConnection();
     }
     else {
-        controllerInterface.simulationStep();
+        controllerInterface->simulationStep();
         /*std::string received = controllerInterface.receiveData();
         if (received.empty()) {
             return;
@@ -47,14 +45,14 @@ void BaseStation::simulationStep() {
 void BaseStation::draw3D() {
     DrawCylinderWires(position, radius, radius, height, 8, GREEN);
     //DrawLine3D(position, Vector3Add(position, Vector3(0, 3, 0)), GREEN);
-    Color color = controllerInterface.isConnected() ? GREEN : RED;
+    Color color = controllerInterface->isConnected() ? GREEN : RED;
     DrawCylinderWires(position, 0.02, 0.02, 5, 3, color);
 
     drawAttachedDevices();
 }
 
 void BaseStation::draw2D() {
-    if (controllerInterface.isConnected()) {
+    if (controllerInterface->isConnected()) {
         DrawText("CONTROLLER CONNECTED", 10, 33, 20, GREEN);
     }
     else {

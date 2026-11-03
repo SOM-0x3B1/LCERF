@@ -3,14 +3,18 @@
 #include "../../common/include/command.hpp"
 #include "../include/devices/attachable/interface.hpp"
 
-DeviceManager::DeviceManager(Graphics* graphics, Menu* menu) : robotManager(graphics, menu) {
+DeviceManager::DeviceManager(Graphics* graphics, Menu* menu, SimulationNetworkInterface* controllerInterface)
+    : robotManager(graphics, menu, controllerInterface){
     this->menu = menu;
     this->graphics = graphics;
+    this->controllerInterface = controllerInterface;
+
     this->selectedDevice = nullptr;
     this->baseStation = nullptr;
     this->sideMenus = nullptr;
 
     registerMenus();
+    registerCommands();
 }
 
 void DeviceManager::registerMenus() {
@@ -43,6 +47,30 @@ void DeviceManager::registerMenus() {
 
     logWindow = new LogWindow(graphics);
     menu->addLogWindow(logWindow);
+}
+
+void DeviceManager::registerCommands() {
+    commandHandler.alwaysAfter(
+        CommandEvent([this](const std::vector<std::string> &commandParts) {
+            std::string log;
+            for (auto part: commandParts) {
+                log.append(part);
+                log.append(" | ");
+            }
+            logWindow->addLog(log);
+        }));
+
+    commandHandler.on(
+        COMMAND_ROBOT_MOVE_TO_POS,
+        CommandEvent([this](const std::vector<std::string>& commandParts) {
+            auto cmd = CommandRobotMoveToPosition::parse(commandParts);
+            auto pos = Vector2(cmd.getX(), cmd.getY());
+            robotManager.getRobotByID(cmd.getID())->addWaypoint(pos);
+        }));
+}
+
+SimulationNetworkInterface * DeviceManager::getControllerInterface() {
+    return controllerInterface;
 }
 
 void DeviceManager::drawAll3D() {
@@ -109,16 +137,11 @@ void DeviceManager::updateInterfaces() {
     }
 }
 
-void DeviceManager::handleControllerCommand() {
-    std::string data = baseStation->receiveData();
+void DeviceManager::handleControllerCommands() {
+    std::string data = controllerInterface->receiveData();
     if (!data.empty()) {
-        std::vector<std::string> parts = Command::split(data);
-        if (parts[0] == "RMP") {
-            int id = std::stoi(parts[1]);
-            auto pos = Vector2(std::stof(parts[2]), std::stof(parts[3]));
-            robotManager.getRobotByID(id)->addWaypoint(pos);
-        }
-        logWindow->addLog(data);
+        auto commands = Command::splitCommands(data);
+        commandHandler.execute(commands);
     }
 }
 
@@ -130,9 +153,14 @@ std::vector<Interface*>* DeviceManager::getInterfaceCollection() {
     return &interfaces;
 }
 
+// TODO: extend
 void DeviceManager::assignIDs() {
     int size = interfaces.size();
     for (int i = 0; i < size; ++i) {
         interfaces[i]->assignID(i + 1);
     }
+}
+
+void DeviceManager::registerRobots() {
+    robotManager.registerRobots();
 }

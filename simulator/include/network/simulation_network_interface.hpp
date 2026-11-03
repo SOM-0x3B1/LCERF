@@ -14,8 +14,8 @@ class SimulationNetworkInterface {
     constexpr static int receiveBufferLen = 255;
     char receiveBuffer[receiveBufferLen]{};
 
-    std::queue<std::string> rx;
-    std::queue<std::string> tx;
+    std::queue<std::string> rx{};
+    std::queue<std::string> tx{};
     std::string receiveDataFromSocket();
     void sendDataToSocket(std::string data);
 
@@ -31,7 +31,7 @@ public:
 
     void simulationStep();
     std::string receiveData();
-    void sendData(const std::string& data);
+    void sendData(std::string data);
 };
 
 

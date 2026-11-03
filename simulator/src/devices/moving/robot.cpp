@@ -31,18 +31,12 @@ Robot::Robot(Vector3 position, Graphics* graphics) : DeviceMovable(position, gra
     attachedInterfaces.push_back(wiredNetworkInterface);
     this->wiredInterface = wiredNetworkInterface;
 
-    // std::random_device rd;
-    // std::mt19937 mt(rd());
-    // std::uniform_real_distribution<float> dist(-1.0, 1.0);
-    //
-    // auto robotPosition = Vector2(position.x, position.z);
-    // for (int i = 0; i < 40; i++) {
-    //     robotPosition = Vector2Add(robotPosition, Vector2(dist(mt) - 0.5f, dist(mt)));
-    //     movementWaypoints.push_back(robotPosition);
-    // }
-
     stuckForTicks = 0;
     showWaypoints = true;
+}
+
+void Robot::addControllerInterface(SimulationNetworkInterface *controllerInterface) {
+    this->controllerInterface = controllerInterface;
 }
 
 void Robot::moveTowardsWaypoint() {
@@ -126,8 +120,10 @@ void Robot::addWaypoint(Vector2 p) {
 }
 
 void Robot::completeWaypoint() {
-    if (!movementWaypoints.empty())
+    if (!movementWaypoints.empty()) {
         movementWaypoints.pop_front();
+        controllerInterface->sendData(CommandRobotWaypointComplete(id).toString());
+    }
 }
 
 void Robot::connectNewWireTo(InterfaceWired *interface) {

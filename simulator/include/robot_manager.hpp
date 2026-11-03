@@ -6,16 +6,18 @@
 #include "graphics.hpp"
 #include "devices/moving/robot.hpp"
 #include "menu/menu.hpp"
+#include "network/simulation_network_interface.hpp"
 
 class RobotManager {
 private:
     std::vector<Robot*> robots;
     Graphics* graphics;
     Menu* menu;
-    SideMenuWithSubMenus* sideMenus;
+    SideMenuWithSubMenus* sideMenus{};
+    SimulationNetworkInterface* controllerInterface;
 
 public:
-    explicit RobotManager(Graphics* graphics, Menu* menu);
+    explicit RobotManager(Graphics* graphics, Menu* menu, SimulationNetworkInterface* controllerInterface);
     ~RobotManager();
 
     void registerMenus();
@@ -23,6 +25,7 @@ public:
 
     void addRobot(Robot* robot);
     Robot* getRobotByID(int id);
+    void registerRobots();
 
     void drawRobots();
 

@@ -4,6 +4,7 @@
 #include <vector>
 #include "devices/device.hpp"
 #include "robot_manager.hpp"
+#include "../../common/include/command_handler.hpp"
 #include "devices/device_static.hpp"
 #include "devices/attachable/interface.hpp"
 #include "devices/static/base_station.hpp"
@@ -14,7 +15,9 @@ private:
     Graphics* graphics;
     Menu* menu;
     SideMenuWithSubMenus* sideMenus;
-    LogWindow* logWindow;
+    LogWindow* logWindow{};
+    SimulationNetworkInterface* controllerInterface;
+    CommandHandler commandHandler;
 
     Device* selectedDevice;
     std::vector<Device*> devices;
@@ -24,9 +27,12 @@ private:
     BaseStation* baseStation;
 
 public:
-    explicit DeviceManager(Graphics* graphics, Menu* menu);
+    explicit DeviceManager(Graphics* graphics, Menu* menu, SimulationNetworkInterface* controllerInterface);
 
     void registerMenus();
+    void registerCommands();
+
+    SimulationNetworkInterface* getControllerInterface();
 
     void drawAll3D();
     void drawAll2D();
@@ -36,6 +42,7 @@ public:
     void setBaseStation(BaseStation* station);
     std::vector<Device*>* getDeviceCollection();
     void assignIDs();
+    void registerRobots();
 
     void selectDevice(int index);
     void deselectDevice();
@@ -43,7 +50,7 @@ public:
 
     void registerInterfaces();
     void updateInterfaces();
-    void handleControllerCommand();
+    void handleControllerCommands();
 
     std::vector<Interface*>* getInterfaceCollection();
 };
