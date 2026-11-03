@@ -62,14 +62,22 @@ void NetworkInterface::tryConnect() {
     }
     printf("Connected...\n");
     connected = true;
+
+    unsigned long nonBlockingMode = 1;
+    if (ioctlsocket(connectSocket, FIONBIO, &nonBlockingMode) == SOCKET_ERROR)
+    {
+        printf("ioctlsocket failed: %d\n", WSAGetLastError());
+        return;
+    }
 }
 
 std::string NetworkInterface::receiveData() {
     int iResult;
-    int iSendResult;
 
     iResult = recv(connectSocket, receiveBuffer, receiveBufferLen, 0);
     if (iResult > 0) {
+        receiveBuffer[iResult] = '\0';
+        printf(receiveBuffer);
         return std::string(receiveBuffer);
     }
     else if (iResult == 0){
@@ -78,10 +86,13 @@ std::string NetworkInterface::receiveData() {
         return "";
     }
     else {
+        int err = WSAGetLastError();
+        if (err == WSAEWOULDBLOCK) {
+            return "";
+        }
         connected = false;
-        printf("recv failed: %d\n", WSAGetLastError());
+        printf("recv failed: %d\n", err);
         closesocket(connectSocket);
-        WSACleanup();
         return "";
     }
 }
@@ -89,7 +100,11 @@ std::string NetworkInterface::receiveData() {
 void NetworkInterface::sendData(std::string data) {
     int iSendResult = send(connectSocket, data.c_str(), data.size(), 0);
     if (iSendResult == SOCKET_ERROR) {
-        printf("send failed: %d\n", WSAGetLastError());
+        int err = WSAGetLastError();
+        if (err == WSAEWOULDBLOCK) {
+            return;
+        }
+        printf("send failed: %d\n", err);
         closesocket(connectSocket);
         WSACleanup();
         connected = false;

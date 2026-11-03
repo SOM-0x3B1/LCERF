@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <thread>
 
+#include "../../../common/include/command.hpp"
+
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -18,8 +20,8 @@ std::string SimulationNetworkInterface::receiveDataFromSocket() {
 
     iResult = recv(clientSocket, receiveBuffer, receiveBufferLen, 0);
     if (iResult > 0) {
-        printf(receiveBuffer);
-        printf("\n");
+        receiveBuffer[iResult] = '\0';
+        printf("%s", receiveBuffer);
         return std::string(receiveBuffer);
     }
     else if (iResult == 0){
@@ -117,15 +119,6 @@ void SimulationNetworkInterface::tryAcceptConnection() {
 
         printf("Awaiting connection...\n");
 
-        /*int nfds = 0;
-        fd_set readfds, writefds, exceptfds;
-        constexpr timeval timeout = {.tv_sec = 0, .tv_usec = 500};
-
-        FD_ZERO(&readfds);
-        FD_SET(serverSocket, &readfds);
-        FD_SET(clientSocket, &readfds);
-        auto res = select(nfds, &readfds, &writefds, &exceptfds, &timeout);*/
-
         clientSocket = accept(serverSocket, NULL, NULL);
         if (clientSocket == INVALID_SOCKET) {
             int err = WSAGetLastError();
@@ -146,6 +139,7 @@ void SimulationNetworkInterface::simulationStep() {
     std::string received = receiveDataFromSocket();
     if (!received.empty())
         rx.push(received);
+
     if (!tx.empty()) {
         sendDataToSocket(tx.front());
         tx.pop();
@@ -161,7 +155,6 @@ std::string SimulationNetworkInterface::receiveData() {
     return "";
 }
 
-void SimulationNetworkInterface::sendData(const std::string& data) {
+void SimulationNetworkInterface::sendData(std::string data) {
     tx.push(data);
 }
-
