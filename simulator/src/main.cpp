@@ -38,7 +38,7 @@ int main() {
         BeginMode3D(*graphics.getCamera());
 
         DrawGrid(20, 1);
-        cave.drawPointCloud();
+        //cave.drawPointCloud();
         deviceManager.focusCameraOnSelectedDevice();
         deviceManager.drawAll3D();
         graphics.drawCursor();

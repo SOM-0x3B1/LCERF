@@ -35,6 +35,17 @@ Robot::Robot(Vector3 position, Graphics* graphics) : DeviceMovable(position, gra
 
     stuckForTicks = 0;
     showWaypoints = true;
+
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_real_distribution<float> dist(-1.0, 1.0);
+
+    for (int i = 0; i < 100; ++i) {
+        auto lastWp = movementWaypoints.empty() ? Vector2(0, 0) : movementWaypoints.back();
+        auto deltaWp = Vector2(dist(mt) - 0.5f, dist(mt));
+        Vector2 newWp = Vector2Add(lastWp, deltaWp);
+        addWaypoint(newWp);
+    }
 }
 
 void Robot::addControllerInterface(ExternalNetworkInterface *controllerInterface) {

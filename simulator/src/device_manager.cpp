@@ -74,9 +74,9 @@ ExternalNetworkInterface * DeviceManager::getControllerInterface() {
 }
 
 void DeviceManager::drawAll3D() {
-    for (auto device: devices) {
+    /*for (auto device: devices) {
         device->draw3D();
-    }
+    }*/
 }
 
 void DeviceManager::drawAll2D() {
