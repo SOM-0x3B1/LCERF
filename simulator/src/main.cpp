@@ -11,7 +11,7 @@
 int main() {
     Graphics graphics;
     Vector3 centerPosition = Vector3(0, 0, 0);
-    graphics.init(1024, 720, 6000, Vector3(1.5f, 1.5f, 0.0f), centerPosition,
+    graphics.init(1024, 720, 60, Vector3(1.5f, 1.5f, 0.0f), centerPosition,
         "Lunar Cave Exploration - Simulator", 12);
 
     auto menu = Menu(&graphics);

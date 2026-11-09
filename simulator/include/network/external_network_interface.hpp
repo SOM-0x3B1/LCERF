@@ -6,8 +6,8 @@
 #include <queue>
 
 class ExternalNetworkInterface {
-    unsigned int serverSocket;
-    unsigned int clientSocket;
+    unsigned __int64 serverSocket;
+    unsigned __int64 clientSocket;
     std::chrono::time_point<std::chrono::steady_clock> lastTriedConnection;
     bool connected;
 
