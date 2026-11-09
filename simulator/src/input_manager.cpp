@@ -59,6 +59,9 @@ void InputManager::handle3DViewInput() {
 
     if (IsKeyPressed(KEY_E))
         menu->toggle();
+
+    if (IsKeyPressed(KEY_F12))
+        graphics->takeScreenshot();
 }
 
 void InputManager::handleWSKeys() {

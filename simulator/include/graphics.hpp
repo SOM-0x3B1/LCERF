@@ -55,6 +55,8 @@ public:
     void rotateCameraYawAroundTarget(float yaw);
     void rotateCameraPitchAroundTarget(float pitch);
 
+    void takeScreenshot();
+
     static Color getProximityColor(Vector3 a, Vector3 b);
 
     static void drawModelPoints(Model model, Vector3 position, float scale, Color tint);

@@ -1,5 +1,8 @@
 #include "../include/graphics.hpp"
 
+#include <chrono>
+#include <string>
+
 #include "raylib.h"
 #include "raymath.h"
 #include "rcamera.h"
@@ -15,7 +18,7 @@ void Graphics::init(int screenWidth, int screenHeight, int fps, const Vector3 ca
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
 
-    SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
+    //SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
 
     camera.position   = cam_pos;
     camera.target     = cam_target;
@@ -131,6 +134,12 @@ void Graphics::rotateCameraYawAroundTarget(float yaw) {
 void Graphics::rotateCameraPitchAroundTarget(float pitch) {
     CameraPitch(&camera, pitch, true, true, false);
     updateDeltaVectorFromTarget();
+}
+
+void Graphics::takeScreenshot() {
+    std::chrono::time_point<std::chrono::utc_clock> time = std::chrono::utc_clock::now();
+    std::string filename = std::format("screenshot-{:%Y-%m-%d-%H-%M-%S}.png", time);
+    TakeScreenshot(filename.c_str());
 }
 
 
