@@ -6,7 +6,7 @@
 #include "graphics.hpp"
 #include "devices/moving/robot.hpp"
 #include "menu/menu.hpp"
-#include "network/simulation_network_interface.hpp"
+#include "network/external_network_interface.hpp"
 
 class RobotManager {
 private:
@@ -14,10 +14,10 @@ private:
     Graphics* graphics;
     Menu* menu;
     SideMenuWithSubMenus* sideMenus{};
-    SimulationNetworkInterface* controllerInterface;
+    ExternalNetworkInterface* controllerInterface;
 
 public:
-    explicit RobotManager(Graphics* graphics, Menu* menu, SimulationNetworkInterface* controllerInterface);
+    explicit RobotManager(Graphics* graphics, Menu* menu, ExternalNetworkInterface* controllerInterface);
     ~RobotManager();
 
     void registerMenus();

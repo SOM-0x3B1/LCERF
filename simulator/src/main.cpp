@@ -10,12 +10,12 @@
 
 int main() {
     Graphics graphics;
-    Vector3 centerPosition = { .x = 0.0f, .y = 0.1f, .z = 0.0f };
-    graphics.init(1024, 720, 60, {.x = 1.5, .y = 1.5, .z = 0}, centerPosition,
+    Vector3 centerPosition = Vector3(0, 0, 0);
+    graphics.init(1024, 720, 6000, Vector3(1.5f, 1.5f, 0.0f), centerPosition,
         "Lunar Cave Exploration - Simulator", 12);
 
     auto menu = Menu(&graphics);
-    auto controllerInterface = SimulationNetworkInterface();
+    auto controllerInterface = ExternalNetworkInterface();
     auto deviceManager = DeviceManager(&graphics, &menu, &controllerInterface);
     auto inputManager = InputManager(&graphics, &deviceManager, &menu);
     auto cave = Cave("pisgah-realigned-reduced.obj", &graphics, {0.0f, 0.1f, 0.0f});

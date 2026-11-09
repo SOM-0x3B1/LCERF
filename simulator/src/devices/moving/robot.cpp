@@ -37,7 +37,7 @@ Robot::Robot(Vector3 position, Graphics* graphics) : DeviceMovable(position, gra
     showWaypoints = true;
 }
 
-void Robot::addControllerInterface(SimulationNetworkInterface *controllerInterface) {
+void Robot::addControllerInterface(ExternalNetworkInterface *controllerInterface) {
     this->controllerInterface = controllerInterface;
 }
 

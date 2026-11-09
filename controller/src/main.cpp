@@ -1,4 +1,3 @@
-#include <cstdio>
 #include <random>
 
 #include "../include/controller.hpp"

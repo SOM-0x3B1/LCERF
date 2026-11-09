@@ -3,7 +3,7 @@
 #include "../../common/include/command.hpp"
 #include "../include/devices/attachable/interface.hpp"
 
-DeviceManager::DeviceManager(Graphics* graphics, Menu* menu, SimulationNetworkInterface* controllerInterface)
+DeviceManager::DeviceManager(Graphics* graphics, Menu* menu, ExternalNetworkInterface* controllerInterface)
     : robotManager(graphics, menu, controllerInterface){
     this->menu = menu;
     this->graphics = graphics;
@@ -69,7 +69,7 @@ void DeviceManager::registerCommands() {
         }));
 }
 
-SimulationNetworkInterface * DeviceManager::getControllerInterface() {
+ExternalNetworkInterface * DeviceManager::getControllerInterface() {
     return controllerInterface;
 }
 

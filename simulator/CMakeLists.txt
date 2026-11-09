@@ -40,7 +40,7 @@ add_executable(${PROJECT_NAME}
         src/menu/menu_window.cpp
         src/menu/side_menu.cpp
         src/menu/menu_content.cpp
-        src/network/simulation_network_interface.cpp
+        src/network/external_network_interface.cpp
         ../common/src/command.cpp
         src/menu/log_window.cpp
         ../common/src/command_handler.cpp

@@ -6,7 +6,7 @@
 #include "../../../include/device_manager.hpp"
 #include "../../../include/devices/attachable/interface_wireless.hpp"
 
-BaseStation::BaseStation(Vector3 position, Graphics* graphics, SimulationNetworkInterface* controllerInterface)
+BaseStation::BaseStation(Vector3 position, Graphics* graphics, ExternalNetworkInterface* controllerInterface)
     : DeviceStatic(position, graphics) {
     supportPoints.push_back(this->position);
 

@@ -16,7 +16,7 @@ private:
     Menu* menu;
     SideMenuWithSubMenus* sideMenus;
     LogWindow* logWindow{};
-    SimulationNetworkInterface* controllerInterface;
+    ExternalNetworkInterface* controllerInterface;
     CommandHandler commandHandler;
 
     Device* selectedDevice;
@@ -27,12 +27,12 @@ private:
     BaseStation* baseStation;
 
 public:
-    explicit DeviceManager(Graphics* graphics, Menu* menu, SimulationNetworkInterface* controllerInterface);
+    explicit DeviceManager(Graphics* graphics, Menu* menu, ExternalNetworkInterface* controllerInterface);
 
     void registerMenus();
     void registerCommands();
 
-    SimulationNetworkInterface* getControllerInterface();
+    ExternalNetworkInterface* getControllerInterface();
 
     void drawAll3D();
     void drawAll2D();

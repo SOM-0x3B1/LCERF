@@ -3,7 +3,7 @@
 
 #include "raymath.h"
 
-RobotManager::RobotManager(Graphics* graphics, Menu* menu, SimulationNetworkInterface* controllerInterface) {
+RobotManager::RobotManager(Graphics* graphics, Menu* menu, ExternalNetworkInterface* controllerInterface) {
     this->graphics = graphics;
     this->controllerInterface = controllerInterface;
     this->robots = std::vector<Robot*>();

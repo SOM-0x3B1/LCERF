@@ -127,9 +127,9 @@ void Cave::drawPointCloud() {
     auto chunkCoordOfTarget = ChunkCoords(graphics->getTarget(), CHUNK_SIZE);
     int renderDistance = graphics->getRenderDistance();
     int xStart = std::max(chunkCoordOfTarget.x - renderDistance, -CHUNK_COUNT_X/2);
-    int xEnd= std::min(chunkCoordOfTarget.x + renderDistance, CHUNK_COUNT_X/2);
+    int xEnd = std::min(chunkCoordOfTarget.x + renderDistance, CHUNK_COUNT_X/2);
     int yStart = std::max(chunkCoordOfTarget.y - renderDistance, -CHUNK_COUNT_Y/2);
-    int yEnd= std::min(chunkCoordOfTarget.y + renderDistance, CHUNK_COUNT_Y/2);
+    int yEnd = std::min(chunkCoordOfTarget.y + renderDistance, CHUNK_COUNT_Y/2);
 
     for (int x = xStart; x < xEnd; ++x) {
         for (int y = yStart; y < yEnd; ++y) {

@@ -1,4 +1,4 @@
-#include "../../include/network/simulation_network_interface.hpp"
+#include "../../include/network/external_network_interface.hpp"
 
 #include <cstdio>
 #include <thread>
@@ -15,7 +15,7 @@
 #endif
 
 
-std::string SimulationNetworkInterface::receiveDataFromSocket() {
+std::string ExternalNetworkInterface::receiveDataFromSocket() {
     int iResult;
 
     iResult = recv(clientSocket, receiveBuffer, receiveBufferLen, 0);
@@ -41,7 +41,7 @@ std::string SimulationNetworkInterface::receiveDataFromSocket() {
     }
 }
 
-void SimulationNetworkInterface::sendDataToSocket(std::string data) {
+void ExternalNetworkInterface::sendDataToSocket(std::string data) {
     int iSendResult = send(clientSocket, data.c_str(), data.size(), 0);
     if (iSendResult == SOCKET_ERROR) {
         int err = WSAGetLastError();
@@ -55,22 +55,22 @@ void SimulationNetworkInterface::sendDataToSocket(std::string data) {
     }
 }
 
-SimulationNetworkInterface::SimulationNetworkInterface() {
+ExternalNetworkInterface::ExternalNetworkInterface() {
     serverSocket = INVALID_SOCKET;
     clientSocket = INVALID_SOCKET;
     this->connected = false;
 }
 
-SimulationNetworkInterface::~SimulationNetworkInterface() {
+ExternalNetworkInterface::~ExternalNetworkInterface() {
     closesocket(serverSocket);
     closesocket(clientSocket);
 }
 
-bool SimulationNetworkInterface::isConnected() {
+bool ExternalNetworkInterface::isConnected() {
     return connected;
 }
 
-void SimulationNetworkInterface::listenOnPort(int port) {
+void ExternalNetworkInterface::listenOnPort(int port) {
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         printf("WSAStartup() error!");
@@ -112,7 +112,7 @@ void SimulationNetworkInterface::listenOnPort(int port) {
     tryAcceptConnection();
 }
 
-void SimulationNetworkInterface::tryAcceptConnection() {
+void ExternalNetworkInterface::tryAcceptConnection() {
     auto now = std::chrono::steady_clock::now();
     if (std::chrono::duration_cast<std::chrono::milliseconds>(now - lastTriedConnection).count() > 1000) {
         lastTriedConnection = now;
@@ -135,7 +135,7 @@ void SimulationNetworkInterface::tryAcceptConnection() {
     }
 }
 
-void SimulationNetworkInterface::simulationStep() {
+void ExternalNetworkInterface::simulationStep() {
     std::string received = receiveDataFromSocket();
     if (!received.empty())
         rx.push(received);
@@ -146,7 +146,7 @@ void SimulationNetworkInterface::simulationStep() {
     }
 }
 
-std::string SimulationNetworkInterface::receiveData() {
+std::string ExternalNetworkInterface::receiveData() {
     if (!rx.empty()) {
         auto data = rx.front();
         rx.pop();
@@ -155,6 +155,6 @@ std::string SimulationNetworkInterface::receiveData() {
     return "";
 }
 
-void SimulationNetworkInterface::sendData(std::string data) {
+void ExternalNetworkInterface::sendData(std::string data) {
     tx.push(data);
 }

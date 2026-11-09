@@ -5,7 +5,7 @@
 #include <string>
 #include <queue>
 
-class SimulationNetworkInterface {
+class ExternalNetworkInterface {
     unsigned int serverSocket;
     unsigned int clientSocket;
     std::chrono::time_point<std::chrono::steady_clock> lastTriedConnection;
@@ -20,8 +20,8 @@ class SimulationNetworkInterface {
     void sendDataToSocket(std::string data);
 
 public:
-    SimulationNetworkInterface();
-    ~SimulationNetworkInterface();
+    ExternalNetworkInterface();
+    ~ExternalNetworkInterface();
 
     bool isConnected();
 
