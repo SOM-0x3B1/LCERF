@@ -23,6 +23,13 @@ void Controller::registerCommands() {
             auto cmd = CommandRobotWaypointComplete::parse(commandParts);
             robotManager->completeWaypoint(cmd.getID());
         }));
+
+    commandHandler.on(
+        COMMAND_ROBOT_STUCK,
+        CommandEvent([this](const std::vector<std::string>& commandParts) {
+            auto cmd = CommandRobotStuck::parse(commandParts);
+            robotManager->clearWaypoints(cmd.getID());
+        }));
 }
 
 Controller::Controller(RobotManager *robotManager, NetworkInterface *networkInterface) {

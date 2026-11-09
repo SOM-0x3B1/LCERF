@@ -72,6 +72,7 @@ void Robot::moveTowardsWaypoint() {
             completeWaypoint();
             moveTo(Vector3(0, 0.1, 0));
             snapToGround();
+            controllerInterface->sendData(CommandRobotStuck(id).toString());
         }
     }
     else {

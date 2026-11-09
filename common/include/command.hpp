@@ -8,6 +8,7 @@
 #define COMMAND_ROBOT_REGISTER_FINISH "RRF"
 #define COMMAND_ROBOT_MOVE_TO_POS "RMP"
 #define COMMAND_ROBOT_WAYPOINT_COMPLETE "RWPC"
+#define COMMAND_ROBOT_STUCK "RS"
 
 class Command {
 protected:
@@ -76,6 +77,19 @@ public:
 
     std::string toString() override;
     static CommandRobotWaypointComplete parse(std::vector<std::string> parts);
+};
+
+class CommandRobotStuck : public Command{
+protected:
+    int id;
+
+public:
+    explicit CommandRobotStuck(int id);
+
+    int getID();
+
+    std::string toString() override;
+    static CommandRobotStuck parse(std::vector<std::string> parts);
 };
 
 #endif //LCERF_COMMANDS_HPP

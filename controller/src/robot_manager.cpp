@@ -42,3 +42,10 @@ void RobotManager::updateRobots() {
         }
     }
 }
+
+void RobotManager::clearWaypoints(int id) {
+    std::queue<Vector2>* waypoints = robots[id].getWaypoints();
+    while (!waypoints->empty()) {
+        waypoints->pop();
+    }
+}

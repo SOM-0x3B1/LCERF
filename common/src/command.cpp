@@ -102,3 +102,20 @@ std::string CommandRobotWaypointComplete::toString() {
 CommandRobotWaypointComplete CommandRobotWaypointComplete::parse(std::vector<std::string> parts) {
     return CommandRobotWaypointComplete(std::stoi(parts[1]));
 }
+
+CommandRobotStuck::CommandRobotStuck(int id)
+    : Command(COMMAND_ROBOT_STUCK), id(id) { }
+
+int CommandRobotStuck::getID() {
+    return id;
+}
+
+std::string CommandRobotStuck::toString() {
+    std::string res = name + ";";
+    res += std::to_string(id) + "\n";
+    return res;
+}
+
+CommandRobotStuck CommandRobotStuck::parse(std::vector<std::string> parts) {
+    return CommandRobotStuck(std::stoi(parts[1]));
+}

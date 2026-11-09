@@ -21,6 +21,7 @@ public:
     void completeWaypoint(int robotID);
 
     void updateRobots();
+    void clearWaypoints(int id);
 };
 
 
