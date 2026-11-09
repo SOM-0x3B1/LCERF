@@ -22,29 +22,33 @@ float ChunkCoords::distanceFrom(ChunkCoords c) {
 }
 
 Mesh Chunk::GenerateMesh(int resolutionDivider) {
-    int currResolution = fullPointCount / resolutionDivider;
+    constexpr int multiplier = 512;
+    volatile int currResolution = fullPointCount / resolutionDivider;
+
+    auto* vertices = new float [currResolution * 3 * multiplier];
 
     Mesh mesh = {
-        .vertexCount = currResolution,
+        .vertexCount = currResolution * multiplier,
         .triangleCount = 1,
-        .vertices = static_cast<float *>(MemAlloc(currResolution * 3 * sizeof(float))),
-        .colors = static_cast<unsigned char *>(MemAlloc(currResolution * 4 * sizeof(unsigned char))),
+        .vertices = vertices,
+        .colors = new unsigned char [currResolution * 4 * multiplier],
     };
 
-    // REF: https://en.wikipedia.org/wiki/Spherical_coordinate_system
-    for (int i = 0; i < currResolution; i++)
-    {
-        mesh.vertices[i*3 + 0] = points[i * resolutionDivider].x;
-        mesh.vertices[i*3 + 1] = points[i * resolutionDivider].y;
-        mesh.vertices[i*3 + 2] = points[i * resolutionDivider].z;
-    }
+    for (int j = 0; j < multiplier; j++) {
+        for (int i = 0; i < currResolution; i++)
+        {
+            mesh.vertices[j * currResolution * 3 + i*3 + 0] = points[i * resolutionDivider].x + 0.01f * j;
+            mesh.vertices[j * currResolution * 3 + i*3 + 1] = points[i * resolutionDivider].y;
+            mesh.vertices[j * currResolution * 3 + i*3 + 2] = points[i * resolutionDivider].z;
+        }
 
-    for (int i = 0; i < currResolution; i++)
-    {
-        mesh.colors[i*4 + 0] = 255;
-        mesh.colors[i*4 + 1] = 255;
-        mesh.colors[i*4 + 2] = 255;
-        mesh.colors[i*4 + 3] = 255;
+        for (int i = 0; i < currResolution; i++)
+        {
+            mesh.colors[j * currResolution * 3 +  i*4 + 0] = 255;
+            mesh.colors[j * currResolution * 3 +  i*4 + 1] = 255;
+            mesh.colors[j * currResolution * 3 +  i*4 + 2] = 255;
+            mesh.colors[j * currResolution * 3 +  i*4 + 3] = 255;
+        }
     }
 
     // Upload mesh data from CPU (RAM) to GPU (VRAM) memory
