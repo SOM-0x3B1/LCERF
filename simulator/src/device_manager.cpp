@@ -94,7 +94,7 @@ void DeviceManager::addRobot(Robot* robot) {
     robotManager.getSideMenus()->getMainSideMenu()->addToLayout(
         new MenuContent(
             MenuContentType::OPTION,
-            "Robot name",
+            std::string("Robot ").append(std::to_string(currentRobotIndex)),
             new OptionActionFunction([this, currentRobotIndex](){selectDevice(currentRobotIndex);})
         )
     );
