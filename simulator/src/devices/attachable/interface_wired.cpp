@@ -59,7 +59,7 @@ void InterfaceWired::updateConnections(std::vector<Interface*>* interfaces) {
 }
 
 void InterfaceWired::draw3D() {
-    DrawCube(position, 0.2, 0.1, 0.1, BLUE);
+    DrawCube(position, 0.08, 0.05, 0.06, GREEN);
     for (auto cWire: connectedWires) {
         if (cWire.isAttachedToSecondPosition)
             cWire.wire->draw();

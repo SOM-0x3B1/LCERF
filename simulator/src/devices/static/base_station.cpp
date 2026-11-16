@@ -15,7 +15,7 @@ BaseStation::BaseStation(Vector3 position, Graphics* graphics, ExternalNetworkIn
     this->attachedDevices.push_back(wirelessAP);
     this->wirelessInterface = wirelessAP;
 
-    Vector3 wiredNetworkInterfacePos = Vector3Add(position, Vector3(0, height, -0.1));
+    Vector3 wiredNetworkInterfacePos = Vector3Add(position, Vector3(0, height + 0.3f, 0));
     auto wiredNetworkInterface = new InterfaceWired(wiredNetworkInterfacePos, graphics, this->id, this);
     attachedDevices.push_back(wiredNetworkInterface);
     this->wiredInterface = wiredNetworkInterface;

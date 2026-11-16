@@ -18,7 +18,7 @@ void Graphics::init(int screenWidth, int screenHeight, int fps, const Vector3 ca
     this->screenWidth = screenWidth;
     this->screenHeight = screenHeight;
 
-    //SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
 
     camera.position   = cam_pos;
     camera.target     = cam_target;
