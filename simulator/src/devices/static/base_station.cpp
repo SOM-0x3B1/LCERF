@@ -52,10 +52,10 @@ void BaseStation::draw3D() {
 }
 
 void BaseStation::draw2D() {
-    if (controllerInterface->isConnected()) {
+    /*if (controllerInterface->isConnected()) {
         DrawText("CONTROLLER CONNECTED", 10, 33, 20, GREEN);
     }
     else {
         DrawText("CONTROLLER DISCONNECTED", 10, 33, 24, RED);
-    }
+    }*/
 }

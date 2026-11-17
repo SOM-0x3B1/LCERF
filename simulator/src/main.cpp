@@ -11,14 +11,14 @@
 int main() {
     Graphics graphics;
     Vector3 centerPosition = Vector3(0, 0, 0);
-    graphics.init(1024, 720, 60, Vector3(1.5f, 1.5f, 0.0f), centerPosition,
+    graphics.init(800, 600, 60, Vector3(1.5f, 1.5f, 0.0f), centerPosition,
         "Lunar Cave Exploration - Simulator", 12);
 
     auto menu = Menu(&graphics);
     auto controllerInterface = ExternalNetworkInterface();
     auto deviceManager = DeviceManager(&graphics, &menu, &controllerInterface);
     auto inputManager = InputManager(&graphics, &deviceManager, &menu);
-    auto cave = Cave("pisgah-realigned-reduced.obj", &graphics, {0.0f, 0.1f, 0.0f});
+    auto cave = Cave("pisgah-realigned-reduced-subdivided-1.obj", &graphics, {0.0f, 0.1f, 0.0f});
 
     controllerInterface.listenOnPort(33222);
 
@@ -46,7 +46,7 @@ int main() {
         EndMode3D();
 
         menu.draw();
-        DrawFPS(10, 10);
+        //DrawFPS(10, 10);
         deviceManager.drawAll2D();
 
         EndDrawing();
